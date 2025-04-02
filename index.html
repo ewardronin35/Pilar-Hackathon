@@ -21,8 +21,48 @@
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text: #f8fafc;
+            --bg-light: #f0f4f8;
+        --text-light: #1a365d;
+        --card-bg-light: #ffffff;
+        --primary-light: #3182ce;
+        
+        /* Dark Mode Variables (existing dark mode) */
+        --bg-dark: #0f172a;
+        --text-dark: #f8fafc;
+        --card-bg-dark: #1e293b;
+        --primary-dark: #7209b7;
         }
+  /* Theme Toggle Styles */
+  .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
 
+    .theme-toggle:hover {
+        transform: rotate(180deg);
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+    }
+
+    body.light-mode .subject-card,
+    body.light-mode .achievements-section,
+    body.light-mode .activity-feed {
+        background-color: var(--card-bg-light);
+        color: var(--text-light);
+    }
+
+    body.light-mode .header-content {
+        background-color: var(--primary-light);
+        color: white;
+    }
         * {
             margin: 0;
             padding: 0;
@@ -1053,6 +1093,125 @@
             background-color: var(--accent);
             color: var(--card-bg);
         }
+        /* Accessibility Dropdown Styles */
+.accessibility-dropdown {
+    position: relative;
+    margin-left: 15px;
+}
+
+.accessibility-toggle {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.accessibility-toggle:hover {
+    transform: rotate(15deg);
+}
+
+.accessibility-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.accessibility-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.accessibility-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.accessibility-option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.accessibility-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.accessibility-checkbox:checked {
+    background-color: var(--accent);
+}
+
+.accessibility-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.accessibility-option label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.accessibility-option i {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.accessibility-option small {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* Accessibility Feature Styles */
+body.dyslexia-friendly {
+    font-family: 'OpenDyslexic', 'Arial', sans-serif;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+}
+
+body.high-contrast {
+    filter: contrast(1.5);
+    background-color: #000;
+    color: #fff;
+}
+
+body.focus-mode .subject-card:not(:hover) {
+    opacity: 0.6;
+    filter: grayscale(50%);
+}
+
+body.color-blind-friendly {
+    /* Add color-blind friendly color modifications */
+    filter: saturate(0.7) hue-rotate(45deg);
+}
     </style>
 </head>
 <body>
@@ -1064,6 +1223,11 @@
     <!-- Header -->
     <header>
         <div class="container header-content">
+            <div class="theme-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark/Light Mode">
+                    <i class="fas fa-adjust"></i>
+                </button>
+            </div>
             <div class="logo">
                 <i class="fas fa-gamepad"></i>
                 Pilar-eLearn
@@ -1494,8 +1658,11 @@
             </div>
         </div>
     </div>
-
+    <script src="accessibilityManager.js"></script>
     <script>
+ 
+
+  
         document.addEventListener('DOMContentLoaded', function() {
             // DOM Elements
             const welcomeModal = document.getElementById('welcomeModal');
@@ -1520,6 +1687,8 @@
             const userAvatarDisplay = document.getElementById('userAvatarDisplay');
             const userProfileDisplay = document.getElementById('userProfileDisplay');
             
+            initTextToSpeech();
+        initThemeToggle();
             // Avatar selection
             let selectedAvatar = '1';
             avatarOptions.forEach(option => {
@@ -1813,12 +1982,38 @@
                 statusElement.textContent = topicData.status;
                 
                 // Make the continue button interactive
-                const continueButton = card.querySelector('.quest-button');
-                continueButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showLessonModal(subject, topicData);
-                });
-            }
+                const continueButton = modal.querySelector('#completeLesson');
+    continueButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        const subject = this.getAttribute('data-subject');
+        const title = this.getAttribute('data-title');
+        
+        // Map subject to correct HTML file
+        const subjectPages = {
+            'english': 'english.html',
+            'filipino': 'filipino.html',
+            'math': 'math.html',
+            'science': 'science.html'
+        };
+        
+        // Redirect to the specific subject page
+        if (subjectPages[subject]) {
+            window.location.href = `Subjects/${subjectPages[subject]}`;
+        }
+    });
+    
+    // Add event listeners for other buttons
+    modal.querySelector('.close-modal').addEventListener('click', function() {
+        modal.classList.remove('active');
+    });
+    
+    modal.querySelector('#closeLesson').addEventListener('click', function() {
+        modal.classList.remove('active');
+    });
+    
+    return modal;
+}
+            
             
             // Create lesson modal
             function createLessonModal() {
@@ -1875,13 +2070,15 @@
             // Show lesson modal with content
             function showLessonModal(subject, topicData) {
                 let lessonModal = document.getElementById('lessonModal');
-                if (!lessonModal) {
-                    lessonModal = createLessonModal();
-                }
+    if (!lessonModal) {
+        lessonModal = createLessonModal();
+        document.body.appendChild(lessonModal);
+    }
                 
                 // Set attributes for tracking
-                lessonModal.setAttribute('data-subject', subject);
-                lessonModal.setAttribute('data-title', topicData.title);
+                const continueButton = lessonModal.querySelector('#completeLesson');
+    continueButton.setAttribute('data-subject', subject);
+    continueButton.setAttribute('data-title', topicData.title);
                 
                 // Get content element
                 const contentElement = lessonModal.querySelector('#lessonContent');
@@ -2424,7 +2621,46 @@
                     });
                 }
             }
+                 // Text-to-Speech Functionality
+    function initTextToSpeech() {
+        const synth = window.speechSynthesis;
         
+        function speakText(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            synth.speak(utterance);
+        }
+
+        // Add to modal continue buttons
+        document.querySelectorAll('.continue-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const text = btn.getAttribute('data-speech') || 'Continuing to the next lesson';
+                speakText(text);
+            });
+        });
+    }
+
+    // Theme Toggle Logic
+    function initThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('pilarTheme') || 'dark';
+        
+        function applyTheme(theme) {
+            document.body.classList.toggle('light-mode', theme === 'light');
+            localStorage.setItem('pilarTheme', theme);
+        }
+
+        // Initial theme application
+        applyTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+            applyTheme(currentTheme);
+        });
+    }
+
+    // Accessibility Dropdown in Header
+  
+    
         });
     </script>
 
