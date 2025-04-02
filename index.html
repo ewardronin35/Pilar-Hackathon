@@ -612,6 +612,8 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -620,16 +622,43 @@
         }
 
         .modal {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh; /* Limit height */
+    overflow-y: auto; /* Enable scrolling */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    position: relative;
+}
+.modal-content {
+    padding: 25px;
+    max-height: 60vh; /* Limit content height */
+    overflow-y: auto; /* Enable scrolling */
+}
+@media (max-width: 600px) {
+    .modal {
+        width: 95%;
+        margin: 20px auto;
+    }
 
+    .modal-content {
+        padding: 15px;
+    }
+
+    .avatar-selection {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .avatar-option {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
         .modal-overlay.active .modal {
             transform: translateY(0);
         }
@@ -1212,6 +1241,17 @@ body.color-blind-friendly {
     /* Add color-blind friendly color modifications */
     filter: saturate(0.7) hue-rotate(45deg);
 }
+.language-selector {
+    margin-left: 15px;
+}
+
+.language-selector select {
+    background-color: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--accent);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
     </style>
 </head>
 <body>
@@ -1578,8 +1618,8 @@ body.color-blind-friendly {
     <div class="modal-overlay active" id="welcomeModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Welcome to Pilar-eLearn!</div>
-                <div class="modal-subtitle">Create your learning adventure profile</div>
+                <div id="modalTitle" class="modal-title">Welcome to Pilar-eLearn!</div>
+                <div id="modalSubtitle" class="modal-subtitle">Create your learning adventure profile</div>
             </div>
             <div class="modal-content">
                 <form id="userProfileForm">
@@ -1658,6 +1698,7 @@ body.color-blind-friendly {
             </div>
         </div>
     </div>
+    <script src="languages.js"></script>
     <script src="accessibilityManager.js"></script>
     <script>
  
@@ -1940,7 +1981,27 @@ body.color-blind-friendly {
                 }
                 return subjectData[grade];
             }
+            function optimizeModalScroll() {
+    const modalContent = document.querySelector('.modal-content');
+    
+    // Use passive event listener
+    modalContent.addEventListener('scroll', function(e) {
+        // Use requestAnimationFrame for smoother performance
+        requestAnimationFrame(() => {
+            const scrollPosition = modalContent.scrollTop;
+            const totalScrollHeight = modalContent.scrollHeight - modalContent.clientHeight;
+            const scrollPercentage = Math.min(Math.round((scrollPosition / totalScrollHeight) * 100), 100);
             
+            const progressBar = modalContent.querySelector('#lessonProgressBar');
+            const progressText = modalContent.querySelector('#lessonProgressText');
+            
+            if (progressBar && progressText) {
+                progressBar.style.width = `${scrollPercentage}%`;
+                progressText.textContent = `${scrollPercentage}%`;
+            }
+        });
+    }, { passive: true });
+}
             // Function to update subject cards based on grade
             function updateSubjectCards(grade) {
                 const data = getSubjectDataForGrade(grade);
