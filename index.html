@@ -922,6 +922,137 @@
         body.slow-connection .loader-overlay {
             display: block;
         }
+
+        /* Chatbot Styles */
+        #chatbotContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001; /* Above header */
+        }
+
+        #chatbotToggle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #chatbotToggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(114, 9, 183, 0.5);
+        }
+
+        #chatbotWindow {
+            position: absolute;
+            bottom: 80px; /* Above the toggle button */
+            right: 0;
+            width: 350px;
+            max-height: 450px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform-origin: bottom right;
+        }
+
+        #chatbotWindow.hidden {
+            transform: scale(0);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        #chatbotClose {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        #chatbotClose:hover {
+            opacity: 1;
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background-color: rgba(76, 201, 240, 0.2); /* Accent color lightened */
+            color: var(--accent);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        .user-message {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .chatbot-suggestions {
+            padding: 10px 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 100px; /* Limit suggestion height */
+            overflow-y: auto;
+        }
+
+        .suggestion-btn {
+            background-color: rgba(76, 201, 240, 0.3); /* Accent */
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-btn:hover {
+            background-color: var(--accent);
+            color: var(--card-bg);
+        }
     </style>
 </head>
 <body>
@@ -2226,8 +2357,99 @@
                 }, 200);
             }
             
+            // Chatbot Elements
+            const chatbotContainer = document.getElementById('chatbotContainer');
+            const chatbotToggle = document.getElementById('chatbotToggle');
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            const chatbotClose = document.getElementById('chatbotClose');
+            const chatbotMessages = document.querySelector('.chatbot-messages');
+            const chatbotSuggestions = document.querySelector('.chatbot-suggestions');
+
+            // Chatbot Toggle Functionality
+            chatbotToggle.addEventListener('click', () => {
+                chatbotWindow.classList.toggle('hidden');
+                if (!chatbotWindow.classList.contains('hidden')) {
+                    populateSuggestions(); // Populate suggestions when opening
+                }
+            });
+
+            chatbotClose.addEventListener('click', () => {
+                chatbotWindow.classList.add('hidden');
+            });
+
+            // Function to add a message to the chat
+            function addChatMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', sender === 'bot' ? 'bot-message' : 'user-message');
+                messageDiv.textContent = text;
+                chatbotMessages.appendChild(messageDiv);
+                // Scroll to the bottom
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+
+            // Function to populate suggestions based on current subjects
+            function populateSuggestions() {
+                chatbotSuggestions.innerHTML = ''; // Clear existing suggestions
+                if (window.currentGradeData) { // Check if grade data exists
+                    const subjects = Object.keys(window.currentGradeData);
+                    subjects.forEach(subject => {
+                        const topicData = window.currentGradeData[subject].find(topic => topic.status !== 'Completed'); // Find the first non-completed topic
+                        if (topicData) {
+                            const suggestionBtn = document.createElement('button');
+                            suggestionBtn.classList.add('suggestion-btn');
+                            suggestionBtn.textContent = `Tell me about ${subject}: ${topicData.title}`; 
+                            suggestionBtn.addEventListener('click', () => {
+                                // Simulate user clicking the suggestion
+                                addChatMessage(suggestionBtn.textContent, 'user');
+                                // Simulate bot response (replace with actual AI logic later)
+                                setTimeout(() => {
+                                    const botResponse = `Let's explore ${subject}! ${topicData.description}. Would you like to start the lesson?`;
+                                    addChatMessage(botResponse, 'bot');
+                                    // Optionally add a 'Start Lesson' button here
+                                }, 500);
+                            });
+                            chatbotSuggestions.appendChild(suggestionBtn);
+                        }
+                    });
+                } else {
+                    // Default suggestions if no grade data yet
+                    const defaultSuggestions = ['What is English?', 'What is Math?', 'How do I earn XP?'];
+                    defaultSuggestions.forEach(text => {
+                         const suggestionBtn = document.createElement('button');
+                            suggestionBtn.classList.add('suggestion-btn');
+                            suggestionBtn.textContent = text;
+                            suggestionBtn.addEventListener('click', () => {
+                                addChatMessage(suggestionBtn.textContent, 'user');
+                                // Basic bot response
+                                setTimeout(() => {
+                                    addChatMessage(`I can help you with that. Let's look into ${text}.`, 'bot');
+                                }, 500);
+                            });
+                            chatbotSuggestions.appendChild(suggestionBtn);
+                    });
+                }
+            }
         
         });
     </script>
+
+    <!-- Chatbot -->
+    <div id="chatbotContainer">
+        <div id="chatbotWindow" class="hidden">
+            <div class="chatbot-header">
+                <span>Chat Assistant</span>
+                <button id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages">
+                <div class="message bot-message">Hello! How can I help you with your learning journey today?</div>
+            </div>
+            <div class="chatbot-suggestions">
+                <!-- Suggestions will be populated here -->
+            </div>
+        </div>
+        <button id="chatbotToggle">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
 </body>
 </html>
