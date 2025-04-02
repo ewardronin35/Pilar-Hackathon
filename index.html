@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilar e-Learn & Earn</title>
-    <link rel="icon" type="image/x-icon" href="images/pilarLogo.ico" />
-
+    <title>EduQuest - Learn & Earn</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
     <style>
         :root {
             --primary: #7209b7;
@@ -232,19 +229,20 @@
         }
 
         .english-bg {
-            background-image: url('/api/placeholder/400/100');
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
         }
 
         .filipino-bg {
-            background-image: url('/api/placeholder/400/100');
+            background: linear-gradient(135deg, #f72585, #b5179e);
         }
 
         .science-bg {
-            background-image: url('/api/placeholder/400/100');
+            background: linear-gradient(135deg, #4ade80, #2dd4bf);
         }
 
         .math-bg {
-            background-image: url('/api/placeholder/400/100');
+            background: linear-gradient(135deg, #fb923c, #f97316);
+
         }
 
         .subject-title {
@@ -1296,6 +1294,24 @@
                         <input type="email" class="form-control" id="userEmail" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
+                        <label class="form-label" for="gradeLevel">Grade Level</label>
+                        <select class="form-control" id="gradeLevel" style="background-color: var(--card-bg); color: var(--text); border: 1px solid var(--accent);">
+                            <option value="" style="color: var(--text);">Select your grade</option>
+                            <option value="1" style="color: var(--text);">Grade 1</option>
+                            <option value="2" style="color: var(--text);">Grade 2</option>
+                            <option value="3" style="color: var(--text);">Grade 3</option>
+                            <option value="4" style="color: var(--text);">Grade 4</option>
+                            <option value="5" style="color: var(--text);">Grade 5</option>
+                            <option value="6" style="color: var(--text);">Grade 6</option>
+                            <option value="7" style="color: var(--text);">Grade 7</option>
+                            <option value="8" style="color: var(--text);">Grade 8</option>
+                            <option value="9" style="color: var(--text);">Grade 9</option>
+                            <option value="10" style="color: var(--text);">Grade 10</option>
+                            <option value="11" style="color: var(--text);">Grade 11</option>
+                            <option value="12" style="color: var(--text);">Grade 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Choose Your Avatar</label>
                         <div class="avatar-selection">
                             <div class="avatar-option avatar-1 selected" data-avatar="1">
@@ -1340,18 +1356,6 @@
                                 <span class="checkbox-label">Low Bandwidth Mode</span>
                             </label>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="gradeLevel">Select Your Grade Level</label>
-                            <select class="form-control" id="gradeLevel">
-                                 <option value="">Choose a grade level</option>
-                                 <option value="1">Grade 1</option>
-                                 <option value="2">Grade 2</option>
-                                 <option value="3">Grade 3</option>
-                                 <option value="4">Grade 4</option>
-                                 <option value="5">Grade 5</option>
-                                 <option value="6">Grade 6</option>
-                            </select>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -1369,6 +1373,7 @@
             const userProfileForm = document.getElementById('userProfileForm');
             const userName = document.getElementById('userName');
             const userEmail = document.getElementById('userEmail');
+            const gradeLevel = document.getElementById('gradeLevel');
             const avatarOptions = document.querySelectorAll('.avatar-option');
             const skipButton = document.getElementById('skipButton');
             const startButton = document.getElementById('startButton');
@@ -1518,11 +1523,711 @@
             
             // Apply float animation to achievements
             const achievements = document.querySelectorAll('.achievement');
-            achievements.forEach((achievement, index) => {
+        achievements.forEach((achievement, index) => {
+            setTimeout(() => {
+                achievement.classList.add('float');
+            }, index * 300);
+        });
+        // Add subject data by grade level
+            const subjectData = {
+                // Grade 1-3 (Primary)
+                "1": {
+                    english: [
+                        { title: "Phonics Basics", xp: 50, coins: 10, progress: 0, status: "Not Started", description: "Learn basic letter sounds and simple word formation" },
+                        { title: "Reading Comprehension", xp: 60, coins: 15, progress: 0, status: "Not Started", description: "Read short stories and answer questions" },
+                        { title: "Vocabulary Building", xp: 40, coins: 10, progress: 0, status: "Not Started", description: "Learn new words and their meanings" }
+                    ],
+                    filipino: [
+                        { title: "Alpabetong Filipino", xp: 50, coins: 10, progress: 0, status: "Not Started", description: "Pag-aaral ng mga titik at tunog" },
+                        { title: "Mga Salita at Kahulugan", xp: 60, coins: 15, progress: 0, status: "Not Started", description: "Pag-aaral ng mga simpleng salita" },
+                        { title: "Mga Maikling Kwento", xp: 40, coins: 10, progress: 0, status: "Not Started", description: "Pagbasa ng maikling kwento" }
+                    ],
+                    math: [
+                        { title: "Counting Numbers", xp: 50, coins: 10, progress: 0, status: "Not Started", description: "Learn to count from 1 to 100" },
+                        { title: "Basic Addition", xp: 60, coins: 15, progress: 0, status: "Not Started", description: "Learn to add numbers up to 20" },
+                        { title: "Basic Subtraction", xp: 40, coins: 10, progress: 0, status: "Not Started", description: "Learn to subtract numbers up to 20" }
+                    ],
+                    science: [
+                        { title: "Plants & Animals", xp: 50, coins: 10, progress: 0, status: "Not Started", description: "Learn about basic living things" },
+                        { title: "Weather & Seasons", xp: 60, coins: 15, progress: 0, status: "Not Started", description: "Learn about weather patterns" },
+                        { title: "My Body", xp: 40, coins: 10, progress: 0, status: "Not Started", description: "Learn about basic body parts and functions" }
+                    ]
+                },
+                // Grade 4-6 (Intermediate)
+                "4": {
+                    english: [
+                        { title: "Grammar Fundamentals", xp: 70, coins: 20, progress: 0, status: "Not Started", description: "Learn parts of speech and sentence structure" },
+                        { title: "Creative Writing", xp: 80, coins: 25, progress: 0, status: "Not Started", description: "Write original short stories" },
+                        { title: "Reading Analysis", xp: 75, coins: 20, progress: 0, status: "Not Started", description: "Analyze character, plot, and setting" }
+                    ],
+                    filipino: [
+                        { title: "Mga Maikling Kwento", xp: 70, coins: 20, progress: 0, status: "Not Started", description: "Pagbasa at pag-unawa ng mga kuwento" },
+                        { title: "Pagsulat ng Sanaysay", xp: 80, coins: 25, progress: 0, status: "Not Started", description: "Pagsulat ng maikling sanaysay" },
+                        { title: "Mga Sawikain", xp: 75, coins: 20, progress: 0, status: "Not Started", description: "Pag-aaral ng mga sawikain at kasabihan" }
+                    ],
+                    math: [
+                        { title: "Multiplication & Division", xp: 70, coins: 20, progress: 0, status: "Not Started", description: "Master times tables and division" },
+                        { title: "Fractions", xp: 80, coins: 25, progress: 0, status: "Not Started", description: "Learn to add, subtract, and compare fractions" },
+                        { title: "Measurements", xp: 75, coins: 20, progress: 0, status: "Not Started", description: "Learn to measure length, weight, and volume" }
+                    ],
+                    science: [
+                        { title: "Earth Science", xp: 70, coins: 20, progress: 0, status: "Not Started", description: "Learn about rocks, soil, and landforms" },
+                        { title: "Life Cycles", xp: 80, coins: 25, progress: 0, status: "Not Started", description: "Study plant and animal life cycles" },
+                        { title: "Energy & Matter", xp: 75, coins: 20, progress: 0, status: "Not Started", description: "Explore basic physics concepts" }
+                    ]
+                },
+                // Grade 7-10 (Junior High)
+                "7": {
+                    english: [
+                        { title: "Literary Analysis", xp: 100, coins: 30, progress: 0, status: "Not Started", description: "Analyze themes and literary devices" },
+                        { title: "Essay Writing", xp: 110, coins: 35, progress: 0, status: "Not Started", description: "Learn argumentative essay structure" },
+                        { title: "Public Speaking", xp: 90, coins: 30, progress: 0, status: "Not Started", description: "Practice speeches and presentations" }
+                    ],
+                    filipino: [
+                        { title: "Noli Me Tangere", xp: 100, coins: 30, progress: 0, status: "Not Started", description: "Pag-aaral ng nobelang Noli Me Tangere" },
+                        { title: "Panitikang Pilipino", xp: 110, coins: 35, progress: 0, status: "Not Started", description: "Mga akda ng kilalang Pilipinong manunulat" },
+                        { title: "Retorika", xp: 90, coins: 30, progress: 0, status: "Not Started", description: "Pag-aaral ng maayos na pagsasalita" }
+                    ],
+                    math: [
+                        { title: "Algebra Basics", xp: 100, coins: 30, progress: 0, status: "Not Started", description: "Learn to solve for variables" },
+                        { title: "Geometry", xp: 110, coins: 35, progress: 0, status: "Not Started", description: "Study shapes, angles, and theorems" },
+                        { title: "Statistics", xp: 90, coins: 30, progress: 0, status: "Not Started", description: "Learn to analyze data and probability" }
+                    ],
+                    science: [
+                        { title: "Plate Tectonics", xp: 100, coins: 30, progress: 0, status: "Not Started", description: "Study earth's crust and movements" },
+                        { title: "Cell Biology", xp: 110, coins: 35, progress: 0, status: "Not Started", description: "Learn about cells and their functions" },
+                        { title: "Chemical Reactions", xp: 90, coins: 30, progress: 0, status: "Not Started", description: "Study basic chemistry principles" }
+                    ]
+                },
+                // Grade 11-12 (Senior High)
+                "11": {
+                    english: [
+                        { title: "Research Writing", xp: 130, coins: 40, progress: 0, status: "Not Started", description: "Learn to research and cite sources" },
+                        { title: "World Literature", xp: 140, coins: 45, progress: 0, status: "Not Started", description: "Study important global literary works" },
+                        { title: "Critical Analysis", xp: 120, coins: 40, progress: 0, status: "Not Started", description: "Develop critical thinking skills" }
+                    ],
+                    filipino: [
+                        { title: "Kontemporaryong Panitikan", xp: 130, coins: 40, progress: 0, status: "Not Started", description: "Modernong akda at sining" },
+                        { title: "El Filibusterismo", xp: 140, coins: 45, progress: 0, status: "Not Started", description: "Pag-aaral ng nobelang El Filibusterismo" },
+                        { title: "Malikhaing Pagsulat", xp: 120, coins: 40, progress: 0, status: "Not Started", description: "Pagsulat ng iba't ibang uri ng akda" }
+                    ],
+                    math: [
+                        { title: "Trigonometry", xp: 130, coins: 40, progress: 0, status: "Not Started", description: "Learn about trigonometric functions" },
+                        { title: "Calculus", xp: 140, coins: 45, progress: 0, status: "Not Started", description: "Study derivatives and integrals" },
+                        { title: "Advanced Algebra", xp: 120, coins: 40, progress: 0, status: "Not Started", description: "Work with complex equations" }
+                    ],
+                    science: [
+                        { title: "Physics", xp: 130, coins: 40, progress: 0, status: "Not Started", description: "Study forces, energy, and motion" },
+                        { title: "Advanced Biology", xp: 140, coins: 45, progress: 0, status: "Not Started", description: "Learn about genetics and ecosystems" },
+                        { title: "Chemistry", xp: 120, coins: 40, progress: 0, status: "Not Started", description: "Study matter, reactions, and compounds" }
+                    ]
+                }
+            };
+            
+            // Function to get subject data for selected grade
+            function getSubjectDataForGrade(grade) {
+                // Default to grade 7 if not found
+                if (!subjectData[grade]) {
+                    // Find closest available grade
+                    const grades = Object.keys(subjectData).map(Number).sort((a, b) => a - b);
+                    let closestGrade = grades[0];
+                    for (const g of grades) {
+                        if (g <= grade) {
+                            closestGrade = g;
+                        } else {
+                            break;
+                        }
+                    }
+                    return subjectData[closestGrade];
+                }
+                return subjectData[grade];
+            }
+            
+            // Function to update subject cards based on grade
+            function updateSubjectCards(grade) {
+                const data = getSubjectDataForGrade(grade);
+                
+                // Update English
+                updateSubjectCard('english', data.english[0]);
+                
+                // Update Filipino
+                updateSubjectCard('filipino', data.filipino[0]);
+                
+                // Update Math
+                updateSubjectCard('math', data.math[0]);
+                
+                // Update Science
+                updateSubjectCard('science', data.science[0]);
+                
+                // Store all subjects data for this grade
+                window.currentGradeData = data;
+            }
+            
+            // Function to update a specific subject card
+            function updateSubjectCard(subject, topicData) {
+                const card = document.querySelector(`.subject-card .${subject}-bg`).parentElement;
+                const titleElement = card.querySelector('h3');
+                const descriptionElement = card.querySelector('p');
+                const progressElement = card.querySelector('.progress-fill');
+                const progressTextElement = card.querySelector('.progress-info span:last-child');
+                const xpElement = card.querySelector('.reward-item:first-child span');
+                const coinsElement = card.querySelector('.reward-item:last-child span');
+                const statusElement = card.querySelector('.quest-status');
+                
+                // Update content
+                titleElement.nextElementSibling.textContent = topicData.title;
+                descriptionElement.textContent = topicData.description;
+                progressElement.style.width = topicData.progress + '%';
+                progressTextElement.textContent = topicData.progress + '%';
+                xpElement.textContent = topicData.xp + ' XP';
+                coinsElement.textContent = topicData.coins;
+                statusElement.textContent = topicData.status;
+                
+                // Make the continue button interactive
+                const continueButton = card.querySelector('.quest-button');
+                continueButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showLessonModal(subject, topicData);
+                });
+            }
+            
+            // Create lesson modal
+            function createLessonModal() {
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.id = 'lessonModal';
+                
+                modal.innerHTML = `
+                    <div class="modal" style="max-width: 700px;">
+                        <div class="modal-header">
+                            <div class="modal-title">Lesson Content</div>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <div class="modal-content" style="max-height: 60vh; overflow-y: auto;">
+                            <div id="lessonContent">
+                                <!-- Content will be inserted here -->
+                            </div>
+                            <div class="progress-section" style="margin-top: 20px;">
+                                <div class="progress-info">
+                                    <span>Lesson Progress</span>
+                                    <span id="lessonProgressText">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="lessonProgressBar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-btn btn-secondary" id="closeLesson">Back to Dashboard</button>
+                            <button class="modal-btn btn-primary" id="completeLesson">Complete Lesson</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Add event listeners
+                modal.querySelector('.close-modal').addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                
+                modal.querySelector('#closeLesson').addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                
+                modal.querySelector('#completeLesson').addEventListener('click', function() {
+                    // Complete the lesson
+                    const subjectElement = modal.getAttribute('data-subject');
+                    const titleElement = modal.getAttribute('data-title');
+                    
+                    completeLesson(subjectElement, titleElement);
+                    modal.classList.remove('active');
+                });
+                
+                return modal;
+            }
+            
+            // Show lesson modal with content
+            function showLessonModal(subject, topicData) {
+                let lessonModal = document.getElementById('lessonModal');
+                if (!lessonModal) {
+                    lessonModal = createLessonModal();
+                }
+                
+                // Set attributes for tracking
+                lessonModal.setAttribute('data-subject', subject);
+                lessonModal.setAttribute('data-title', topicData.title);
+                
+                // Get content element
+                const contentElement = lessonModal.querySelector('#lessonContent');
+                
+                // Generate content based on subject and topic
+                let content = '';
+                switch(subject) {
+                    case 'english':
+                        content = generateEnglishContent(topicData);
+                        break;
+                    case 'filipino':
+                        content = generateFilipinoContent(topicData);
+                        break;
+                    case 'math':
+                        content = generateMathContent(topicData);
+                        break;
+                    case 'science':
+                        content = generateScienceContent(topicData);
+                        break;
+                }
+                
+                // Set content
+                contentElement.innerHTML = content;
+                
+                // Reset progress
+                lessonModal.querySelector('#lessonProgressBar').style.width = '0%';
+                lessonModal.querySelector('#lessonProgressText').textContent = '0%';
+                
+                // Show modal
+                lessonModal.classList.add('active');
+                
+                // Simulate progress as user scrolls
+                const modalContent = lessonModal.querySelector('.modal-content');
+                modalContent.addEventListener('scroll', function() {
+                    const scrollPosition = modalContent.scrollTop;
+                    const totalScrollHeight = modalContent.scrollHeight - modalContent.clientHeight;
+                    const scrollPercentage = Math.min(Math.round((scrollPosition / totalScrollHeight) * 100), 100);
+                    
+                    lessonModal.querySelector('#lessonProgressBar').style.width = scrollPercentage + '%';
+                    lessonModal.querySelector('#lessonProgressText').textContent = scrollPercentage + '%';
+                    
+                    // Enable complete button if scrolled more than 70%
+                    if (scrollPercentage > 70) {
+                        lessonModal.querySelector('#completeLesson').disabled = false;
+                    }
+                });
+                
+                // Initially disable complete button
+                lessonModal.querySelector('#completeLesson').disabled = true;
+            }
+            
+            // Complete a lesson
+            function completeLesson(subject, title) {
+                // Find the subject and topic in current grade data
+                const data = window.currentGradeData;
+                let topicIndex = -1;
+                
+                for (let i = 0; i < data[subject].length; i++) {
+                    if (data[subject][i].title === title) {
+                        topicIndex = i;
+                        break;
+                    }
+                }
+                
+                if (topicIndex !== -1) {
+                    // Update progress and status
+                    data[subject][topicIndex].progress = 100;
+                    data[subject][topicIndex].status = "Completed";
+                    
+                    // Update the card
+                    updateSubjectCard(subject, data[subject][topicIndex]);
+                    
+                    // Add to activity feed
+                    addActivity(subject, title, data[subject][topicIndex].xp, data[subject][topicIndex].coins);
+                    
+                    // Update user stats
+                    updateUserStats(data[subject][topicIndex].xp, data[subject][topicIndex].coins);
+                    
+                    // Show next topic if available
+                    if (topicIndex < data[subject].length - 1) {
+                        // Update to next topic
+                        updateSubjectCard(subject, data[subject][topicIndex + 1]);
+                    }
+                }
+            }
+            
+            // Update user stats
+            function updateUserStats(xp, coins) {
+                const xpElement = document.querySelector('.user-stats .stat:first-child .stat-value');
+                const coinsElement = document.querySelector('.user-stats .stat:nth-child(2) .stat-value');
+                
+                let currentXP = parseInt(xpElement.textContent) || 0;
+                let currentCoins = parseInt(coinsElement.textContent) || 0;
+                
+                // Add new values
+                currentXP += xp;
+                currentCoins += coins;
+                
+                // Update display
+                xpElement.textContent = currentXP.toLocaleString() + ' XP';
+                coinsElement.textContent = currentCoins;
+                
+                // Animate
+                xpElement.parentElement.classList.add('pulse');
+                coinsElement.parentElement.classList.add('pulse');
+                
                 setTimeout(() => {
-                    achievement.classList.add('float');
-                }, index * 300);
+                    xpElement.parentElement.classList.remove('pulse');
+                    coinsElement.parentElement.classList.remove('pulse');
+                }, 2000);
+            }
+            
+            // Add activity to feed
+            function addActivity(subject, title, xp, coins) {
+                const activityList = document.querySelector('.activity-list');
+                const newActivity = document.createElement('div');
+                newActivity.className = 'activity-item';
+                
+                newActivity.innerHTML = `
+                    <div class="activity-icon ${subject}-activity">
+                        <i class="fas ${getSubjectIcon(subject)}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Completed ${title}</div>
+                        <div class="activity-details">
+                            <div class="activity-time">Just now</div>
+                            <div class="activity-rewards">
+                                <div class="xp-reward">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>${xp} XP</span>
+                                </div>
+                                <div class="coin-reward">
+                                    <i class="fas fa-coins"></i>
+                                    <span>${coins}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to top of list
+                if (activityList.firstChild) {
+                    activityList.insertBefore(newActivity, activityList.firstChild);
+                } else {
+                    activityList.appendChild(newActivity);
+                }
+                
+                // Limit to 5 activities
+                if (activityList.children.length > 5) {
+                    activityList.removeChild(activityList.lastChild);
+                }
+                
+                // Animation
+                newActivity.style.opacity = '0';
+                newActivity.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    newActivity.style.transition = 'all 0.5s ease';
+                    newActivity.style.opacity = '1';
+                    newActivity.style.transform = 'translateY(0)';
+                }, 100);
+            }
+            
+            // Get icon for subject
+            function getSubjectIcon(subject) {
+                switch(subject) {
+                    case 'english': return 'fa-book';
+                    case 'filipino': return 'fa-pen';
+                    case 'math': return 'fa-calculator';
+                    case 'science': return 'fa-flask';
+                    default: return 'fa-file';
+                }
+            }
+            
+            // Generate content for each subject
+            function generateEnglishContent(topicData) {
+                return `
+                    <h2>${topicData.title}</h2>
+                    <p>${topicData.description}</p>
+                    <div style="margin: 20px 0;">
+                        <h3>Learning Objectives</h3>
+                        <ul>
+                            <li>Understand key concepts related to ${topicData.title.toLowerCase()}</li>
+                            <li>Develop critical thinking skills through analysis and interpretation</li>
+                            <li>Apply language concepts in practical contexts</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Key Concepts</h3>
+                        <p>This lesson covers important English language and literature concepts that will help you communicate effectively and analyze texts with deeper understanding.</p>
+                        <p>English helps us develop critical thinking skills and express our ideas clearly and persuasively.</p>
+                        <p>Through consistent practice and application, you'll improve your reading comprehension, writing, and analytical abilities.</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Practice Activities</h3>
+                        <p>Complete these activities to reinforce your learning:</p>
+                        <ol>
+                            <li>Read the provided text and identify the main themes</li>
+                            <li>Write a short response analyzing the author's techniques</li>
+                            <li>Complete the vocabulary exercises</li>
+                            <li>Participate in the group discussion</li>
+                        </ol>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Additional Resources</h3>
+                        <p>Explore these resources to deepen your understanding:</p>
+                        <ul>
+                            <li>Interactive grammar exercises</li>
+                            <li>Recommended reading list</li>
+                            <li>Video tutorials on literary analysis</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            function generateFilipinoContent(topicData) {
+                return `
+                    <h2>${topicData.title}</h2>
+                    <p>${topicData.description}</p>
+                    <div style="margin: 20px 0;">
+                        <h3>Mga Layunin sa Pagkatuto</h3>
+                        <ul>
+                            <li>Maunawaan ang mahahalagang konsepto tungkol sa ${topicData.title.toLowerCase()}</li>
+                            <li>Mapaunlad ang kakayahan sa pag-iisip at pagsusuri</li>
+                            <li>Makapagsanay sa paggamit ng wikang Filipino</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Mahahalagang Konsepto</h3>
+                        <p>Ang araling ito ay sumasaklaw sa mahahalagang konsepto ng wika at panitikang Filipino na tutulong sa iyong maunawaan ang ating kultura at pagkakakilanlan.</p>
+                        <p>Ang wikang Filipino ay nagsisilbing instrumento ng pambansang pagkakaisa at pagpapahayag ng ating kulturang Pilipino.</p>
+                        <p>Sa pamamagitan ng patuloy na pagsasanay at pag-aaral, mapapaunlad mo ang iyong kakayahan sa pagbasa, pagsulat, at pag-unawa ng wikang Filipino.</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Mga Gawain</h3>
+                        <p>Kumpletuhin ang mga sumusunod na gawain:</p>
+                        <ol>
+                            <li>Basahin ang teksto at tukuyin ang pangunahing tema</li>
+                            <li>Sumulat ng maikling reaksyon tungkol sa binasa</li>
+                            <li>Kumpletuhin ang mga pagsasanay sa bokabularyo</li>
+                            <li>Makilahok sa talakayan ng grupo</li>
+                        </ol>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Karagdagang Sanggunian</h3>
+                        <p>Tuklasin ang mga sumusunod na sanggunian:</p>
+                        <ul>
+                            <li>Mga interaktibong pagsasanay sa gramatika</li>
+                            <li>Listahan ng mga inirerekomendang babasahin</li>
+                            <li>Mga video tungkol sa panitikang Pilipino</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            function generateMathContent(topicData) {
+                return `
+                    <h2>${topicData.title}</h2>
+                    <p>${topicData.description}</p>
+                    <div style="margin: 20px 0;">
+                        <h3>Learning Objectives</h3>
+                        <ul>
+                            <li>Understand key mathematical concepts related to ${topicData.title.toLowerCase()}</li>
+                            <li>Develop problem-solving skills through practice</li>
+                            <li>Apply mathematical concepts to real-world situations</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Key Concepts</h3>
+                        <p>This lesson covers important mathematical principles that form the foundation for more advanced concepts.</p>
+                        <p>Mathematics helps us understand patterns, solve problems, and make informed decisions based on quantitative information.</p>
+                        <p>Through regular practice and application, you'll develop stronger analytical and logical reasoning skills.</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Practice Problems</h3>
+                        <p>Solve these problems to reinforce your learning:</p>
+                        <ol>
+                            <li>Problem 1: Apply the concept to find the solution</li>
+                            <li>Problem 2: Work through this step-by-step example</li>
+                            <li>Problem 3: Challenge yourself with this application</li>
+                            <li>Problem 4: Analyze this real-world scenario</li>
+                        </ol>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Additional Resources</h3>
+                        <p>Explore these resources to deepen your understanding:</p>
+                        <ul>
+                            <li>Interactive practice exercises</li>
+                            <li>Video tutorials on problem-solving techniques</li>
+                            <li>Real-world applications of ${topicData.title.toLowerCase()}</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            function generateScienceContent(topicData) {
+                return `
+                    <h2>${topicData.title}</h2>
+                    <p>${topicData.description}</p>
+                    <div style="margin: 20px 0;">
+                        <h3>Learning Objectives</h3>
+                        <ul>
+                            <li>Understand key scientific concepts related to ${topicData.title.toLowerCase()}</li>
+                            <li>Develop scientific inquiry and critical thinking skills</li>
+                            <li>Apply scientific principles to explain natural phenomena</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Key Concepts</h3>
+                        <p>This lesson explores important scientific principles that help us understand the world around us.</p>
+                        <p>Science empowers us to make evidence-based decisions and solve complex problems through systematic investigation.</p>
+                        <p>Through observation, experimentation, and analysis, you'll develop a deeper understanding of natural phenomena.</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Investigations and Activities</h3>
+                        <p>Complete these activities to reinforce your learning:</p>
+                        <ol>
+                            <li>Observe and record data related to the topic</li>
+                            <li>Conduct a simple experiment to test a hypothesis</li>
+                            <li>Analyze provided data and draw conclusions</li>
+                            <li>Research and report on a related scientific discovery</li>
+                        </ol>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h3>Additional Resources</h3>
+                        <p>Explore these resources to deepen your understanding:</p>
+                        <ul>
+                            <li>Interactive simulations and models</li>
+                            <li>Video demonstrations of scientific principles</li>
+                            <li>Articles on recent discoveries in this field</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            // Grade level change handler
+            gradeLevel.addEventListener('change', function() {
+                if (this.value) {
+                    updateSubjectCards(this.value);
+                }
             });
+            
+            // Skip button - use default values
+            skipButton.addEventListener('click', function() {
+                // Close modal with default values
+                welcomeModal.classList.remove('active');
+                
+                // Set default name
+                userNameDisplay.textContent = 'Scholar';
+                welcomeNameDisplay.textContent = 'Scholar';
+                
+                // Set default avatar
+                userAvatarDisplay.innerHTML = '<i class="fas fa-user"></i>';
+                
+                // Set default grade level (Grade 7)
+                updateSubjectCards('7');
+            });
+            
+            // Start button - use form values
+            startButton.addEventListener('click', function() {
+                // Basic validation
+                if (userName.value.trim() === '') {
+                    userName.focus();
+                    userName.style.borderColor = 'var(--danger)';
+                    return;
+                }
+                
+                if (userEmail.value.trim() === '') {
+                    userEmail.focus();
+                    userEmail.style.borderColor = 'var(--danger)';
+                    return;
+                }
+                
+                // Get first name for display
+                const name = userName.value.trim().split(' ')[0];
+                
+                // Update displays
+                userNameDisplay.textContent = name;
+                welcomeNameDisplay.textContent = name;
+                
+                // Set avatar based on selection
+                let avatarIcon = '';
+                switch(selectedAvatar) {
+                    case '1':
+                        avatarIcon = '<i class="fas fa-user"></i>';
+                        break;
+                    case '2':
+                        avatarIcon = '<i class="fas fa-user-graduate"></i>';
+                        break;
+                    case '3':
+                        avatarIcon = '<i class="fas fa-user-astronaut"></i>';
+                        break;
+                    case '4':
+                        avatarIcon = '<i class="fas fa-user-ninja"></i>';
+                        break;
+                    default:
+                        avatarIcon = '<i class="fas fa-user"></i>';
+                }
+                userAvatarDisplay.innerHTML = avatarIcon;
+                
+                // Update subjects based on grade level
+                if (gradeLevel.value) {
+                    updateSubjectCards(gradeLevel.value);
+                } else {
+                    // Default to grade 7 if not selected
+                    updateSubjectCards('7');
+                }
+                
+                // Apply accessibility options
+                if (dyslexiaOption.checked) {
+                    document.body.classList.add('dyslexia-friendly');
+                }
+                
+                if (adhOption.checked) {
+                    document.body.classList.add('focus-mode');
+                }
+                
+                if (colorBlindOption.checked) {
+                    document.body.classList.add('color-blind-friendly');
+                }
+                
+                if (highContrastOption.checked) {
+                    document.body.classList.add('high-contrast');
+                }
+                
+                if (slowConnectionOption.checked) {
+                    document.body.classList.add('slow-connection');
+                    simulateSlowLoading();
+                }
+                
+                // Close modal
+                welcomeModal.classList.remove('active');
+                
+                // Add welcome animation
+                userProfileDisplay.classList.add('pulse');
+                setTimeout(() => {
+                    userProfileDisplay.classList.remove('pulse');
+                }, 2000);
+            });
+            
+            // Input event listeners
+            userName.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    this.style.borderColor = '';
+                }
+            });
+            
+            userEmail.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    this.style.borderColor = '';
+                }
+            });
+            
+            // Slow connection simulation
+            function simulateSlowLoading() {
+                const loader = document.querySelector('.loader');
+                let width = 0;
+                
+                const interval = setInterval(function() {
+                    if (width >= 100) {
+                        width = 0;
+                        loader.style.width = width + '%';
+                    } else {
+                        width += Math.random() * 3;
+                        if (width > 100) width = 100;
+                        loader.style.width = width + '%';
+                    }
+                }, 200);
+            }
+            
+        
         });
     </script>
 </body>
