@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduQuest - Learn & Earn</title>
+    <title>Pilar-eLearn</title>
+    <link rel="icon" href="images/pilarLogo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/pilarLogo.ico" type="image/x-icon">
+        
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -932,7 +935,7 @@
         <div class="container header-content">
             <div class="logo">
                 <i class="fas fa-gamepad"></i>
-                EduQuest
+                Pilar-eLearn
             </div>
             <div class="user-stats">
                 <div class="stat">
@@ -1280,7 +1283,7 @@
     <div class="modal-overlay active" id="welcomeModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Welcome to EduQuest!</div>
+                <div class="modal-title">Welcome to Pilar-eLearn!</div>
                 <div class="modal-subtitle">Create your learning adventure profile</div>
             </div>
             <div class="modal-content">
@@ -1719,7 +1722,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="modal-btn btn-secondary" id="closeLesson">Back to Dashboard</button>
-                            <button class="modal-btn btn-primary" id="completeLesson">Complete Lesson</button>
+                            <button class="modal-btn btn-primary" id="completeLesson">Continue to Lesson</button>
                         </div>
                     </div>
                 `;
@@ -1735,12 +1738,8 @@
                     modal.classList.remove('active');
                 });
                 
-                modal.querySelector('#completeLesson').addEventListener('click', function() {
-                    // Complete the lesson
-                    const subjectElement = modal.getAttribute('data-subject');
-                    const titleElement = modal.getAttribute('data-title');
-                    
-                    completeLesson(subjectElement, titleElement);
+                modal.querySelector('#completeLesson').addEventListener('click', function(e) {
+                    e.preventDefault();
                     modal.classList.remove('active');
                 });
                 
