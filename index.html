@@ -2781,6 +2781,315 @@ body.color-blind-friendly {
     body.light-mode .accessibility-btn:hover {
         color: var(--gradient-light-3);
     }
+
+    /* Enhanced Chatbot Styling */
+    .chatbot-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1001;
+    }
+
+    .chatbot-window {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 350px;
+        height: 450px;
+        background-color: var(--card-bg);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform-origin: bottom right;
+    }
+
+    .chatbot-window.hidden {
+        transform: scale(0);
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .chatbot-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .chatbot-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .chatbot-title::before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: #4ade80;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    .chatbot-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .chatbot-close:hover {
+        opacity: 1;
+    }
+
+    .chatbot-messages {
+        flex-grow: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary) rgba(0, 0, 0, 0.1);
+    }
+
+    .chatbot-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-thumb {
+        background-color: var(--primary);
+        border-radius: 3px;
+    }
+
+    .message {
+        padding: 12px 16px;
+        border-radius: 18px;
+        max-width: 85%;
+        word-wrap: break-word;
+        line-height: 1.4;
+        position: relative;
+        animation: messageAppear 0.3s ease forwards;
+    }
+
+    @keyframes messageAppear {
+        from { 
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .bot-message {
+        background: linear-gradient(135deg, rgba(76, 201, 240, 0.15), rgba(58, 134, 255, 0.15));
+        color: var(--text);
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+        border-left: 3px solid var(--accent);
+    }
+
+    .user-message {
+        background: linear-gradient(135deg, rgba(114, 9, 183, 0.15), rgba(114, 9, 183, 0.25));
+        color: var(--text);
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+        border-right: 3px solid var(--primary);
+    }
+
+    .chatbot-input-container {
+        display: flex;
+        padding: 12px 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .chatbot-input {
+        flex-grow: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 10px 15px;
+        color: var(--text);
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .chatbot-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(114, 9, 183, 0.2);
+    }
+
+    .chatbot-send {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .chatbot-send:hover {
+        transform: scale(1.1);
+    }
+
+    .chatbot-suggestions {
+        padding: 10px 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-height: 100px;
+        overflow-y: auto;
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .suggestion-btn {
+        background-color: rgba(76, 201, 240, 0.15);
+        border: 1px solid rgba(76, 201, 240, 0.3);
+        color: var(--accent);
+        padding: 8px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .suggestion-btn:hover {
+        background-color: rgba(76, 201, 240, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .chatbot-toggle {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-size: 1.8rem;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .chatbot-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(114, 9, 183, 0.5);
+    }
+
+    .chatbot-toggle::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: #4ade80;
+        border-radius: 50%;
+        top: 10px;
+        right: 10px;
+        border: 2px solid var(--card-bg);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+        }
+    }
+
+    /* Light mode styles for chatbot */
+    body.light-mode .chatbot-window {
+        background-color: var(--card-bg-light);
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+    }
+
+    body.light-mode .chatbot-header {
+        background: linear-gradient(90deg, var(--gradient-light-1), var(--gradient-light-2));
+    }
+
+    body.light-mode .chatbot-toggle {
+        background: linear-gradient(135deg, var(--gradient-light-1), var(--gradient-light-2));
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    body.light-mode .chatbot-toggle::after {
+        border-color: var(--card-bg-light);
+    }
+
+    body.light-mode .bot-message {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(59, 130, 246, 0.12));
+        border-left: 3px solid var(--gradient-light-1);
+    }
+
+    body.light-mode .user-message {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(59, 130, 246, 0.2));
+        border-right: 3px solid var(--gradient-light-1);
+    }
+
+    body.light-mode .suggestion-btn {
+        background-color: rgba(37, 99, 235, 0.08);
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        color: var(--gradient-light-1);
+    }
+
+    body.light-mode .suggestion-btn:hover {
+        background-color: rgba(37, 99, 235, 0.15);
+    }
+
+    body.light-mode .chatbot-input {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        color: var(--text-light);
+    }
+
+    body.light-mode .chatbot-input:focus {
+        border-color: var(--gradient-light-1);
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    body.light-mode .chatbot-send {
+        background: linear-gradient(135deg, var(--gradient-light-1), var(--gradient-light-2));
+    }
+
+    /* Hide floating TTS button */
+    .tts-toggle-btn, .tts-controls, .tts-language-dropdown {
+        display: none !important;
+    }
     </style>
     <div class="loader-overlay">
     </style>
@@ -2877,7 +3186,7 @@ body.color-blind-friendly {
                             <div class="quest-status">In Progress</div>
                         </div>
 
-                        <a href="Subjects/english.html" class="quest-button">Continue Quest</a>
+                        <button class="quest-button" data-subject="english" data-title="Literary Analysis: The Hero's Journey" data-description="Learn how to analyze the hero's journey across different literary works.">Continue Quest</button>
                     </div>
                 </div>
 
@@ -2919,7 +3228,7 @@ body.color-blind-friendly {
                             <div class="quest-status">In Progress</div>
                         </div>
 
-                        <a href="Subjects/filipino.html" class="quest-button">Continue Quest</a>
+                        <button class="quest-button" data-subject="filipino" data-title="Panitikang Pilipino: Noli Me Tangere" data-description="Pag-aaral ng pambansang nobela ni Jose Rizal at ang kahulugan nito sa ating kasaysayan at lipunan.">Continue Quest</button>
                     </div>
                 </div>
 
@@ -2961,7 +3270,7 @@ body.color-blind-friendly {
                             <div class="quest-status">Almost Done!</div>
                         </div>
 
-                        <a href="Subjects/science.html" class="quest-button">Continue Quest</a>
+                        <button class="quest-button" data-subject="science" data-title="Earth Science: Plate Tectonics" data-description="Learn about how the Earth's crust is divided into tectonic plates and how their movements shape our planet's geography and create natural phenomena.">Continue Quest</button>
                     </div>
                 </div>
 
@@ -3003,7 +3312,7 @@ body.color-blind-friendly {
                             <div class="quest-status">In Progress</div>
                         </div>
 
-                        <a href="Subjects/science.html" class="quest-button">Continue Quest</a>
+                        <button class="quest-button" data-subject="math" data-title="Algebra: Quadratic Equations" data-description="Master solving quadratic equations using different methods including factoring, completing the square, and the quadratic formula.">Continue Quest</button>
                     </div>
                 </div>
             </div>
@@ -4919,7 +5228,482 @@ body.color-blind-friendly {
             });
         }
     });
+
+    // Course Summary Modal Functionality
+    const questButtons = document.querySelectorAll('.quest-button');
+    const courseSummaryModal = document.getElementById('courseSummaryModal');
+    const closeSummaryModal = document.getElementById('closeSummaryModal');
+    const backToDashboardBtn = document.getElementById('backToDashboardBtn');
+    const continueToLessonBtn = document.getElementById('continueToLessonBtn');
+    const courseSummaryTitle = document.getElementById('courseSummaryTitle');
+    const courseSummaryContent = document.getElementById('courseSummaryContent');
+    const courseSummaryHeader = document.getElementById('courseSummaryHeader');
+    const courseSummaryProgress = document.getElementById('courseSummaryProgress');
+    const courseSummaryProgressBar = document.getElementById('courseSummaryProgressBar');
+    const courseLearningPoints = document.getElementById('courseLearningPoints');
+    const courseEstimatedTime = document.getElementById('courseEstimatedTime');
+    
+    // Course content data
+    const courseData = {
+        english: {
+            title: "Literary Analysis: The Hero's Journey",
+            description: "Learn how to analyze the hero's journey across different literary works and identify common patterns in storytelling.",
+            headerClass: "english-bg",
+            progressBarClass: "english-progress",
+            progress: "75%",
+            learningPoints: [
+                "Understand the stages of the hero's journey",
+                "Identify character archetypes in literature",
+                "Analyze how the hero's journey applies to modern stories",
+                "Develop critical reading skills for literary analysis"
+            ],
+            estimatedTime: "45 minutes",
+            pageUrl: "Subjects/english.html"
+        },
+        filipino: {
+            title: "Panitikang Pilipino: Noli Me Tangere",
+            description: "Pag-aaral ng pambansang nobela ni Jose Rizal at ang kahulugan nito sa ating kasaysayan at lipunan.",
+            headerClass: "filipino-bg",
+            progressBarClass: "filipino-progress",
+            progress: "60%",
+            learningPoints: [
+                "Kilalanin ang mahahalagang tauhan sa nobela",
+                "Suriin ang mga pangunahing tema ng Noli Me Tangere",
+                "Unawain ang kahulugan ng nobela sa konteksto ng kasaysayan ng Pilipinas",
+                "Tuklasin ang mga simbolismo at metapora na ginamit ni Rizal"
+            ],
+            estimatedTime: "50 minutes",
+            pageUrl: "Subjects/filipino.html"
+        },
+        science: {
+            title: "Earth Science: Plate Tectonics",
+            description: "Learn about how the Earth's crust is divided into tectonic plates and how their movements shape our planet's geography and create natural phenomena.",
+            headerClass: "science-bg",
+            progressBarClass: "science-progress",
+            progress: "82%",
+            learningPoints: [
+                "Understand the theory of plate tectonics",
+                "Identify different types of plate boundaries",
+                "Explain how earthquakes, volcanoes, and mountain formation relate to plate movements",
+                "Analyze real-world examples of tectonic activity"
+            ],
+            estimatedTime: "40 minutes",
+            pageUrl: "Subjects/science.html"
+        },
+        math: {
+            title: "Algebra: Quadratic Equations",
+            description: "Master solving quadratic equations using different methods including factoring, completing the square, and the quadratic formula.",
+            headerClass: "math-bg",
+            progressBarClass: "math-progress",
+            progress: "45%",
+            learningPoints: [
+                "Understand the standard form of quadratic equations",
+                "Solve quadratic equations by factoring",
+                "Apply the quadratic formula to solve equations",
+                "Interpret solutions in real-world contexts"
+            ],
+            estimatedTime: "55 minutes",
+            pageUrl: "Subjects/math.html"
+        }
+    };
+    
+    // Open course summary modal when quest button is clicked
+    questButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const subject = this.getAttribute('data-subject');
+            const data = courseData[subject];
+            
+            if (data) {
+                // Update modal content
+                courseSummaryTitle.textContent = data.title;
+                courseSummaryContent.innerHTML = `<p>${data.description}</p>`;
+                courseSummaryHeader.className = 'modal-header ' + data.headerClass;
+                courseSummaryProgress.textContent = data.progress;
+                courseSummaryProgressBar.className = 'progress-fill ' + data.progressBarClass;
+                courseSummaryProgressBar.style.width = data.progress;
+                courseEstimatedTime.textContent = data.estimatedTime;
+                
+                // Update learning points
+                let learningPointsHTML = '';
+                data.learningPoints.forEach(point => {
+                    learningPointsHTML += `<li>${point}</li>`;
+                });
+                courseLearningPoints.innerHTML = learningPointsHTML;
+                
+                // Set continue button destination
+                continueToLessonBtn.setAttribute('data-destination', data.pageUrl);
+                
+                // Show modal
+                courseSummaryModal.classList.add('active');
+            }
+        });
+    });
+    
+    // Close modal when close button is clicked
+    closeSummaryModal.addEventListener('click', function() {
+        courseSummaryModal.classList.remove('active');
+    });
+    
+    // Close modal when "Back to Dashboard" is clicked
+    backToDashboardBtn.addEventListener('click', function() {
+        courseSummaryModal.classList.remove('active');
+    });
+    
+    // Redirect to lesson page when "Continue to Lesson" is clicked
+    continueToLessonBtn.addEventListener('click', function() {
+        const destination = this.getAttribute('data-destination');
+        if (destination) {
+            window.location.href = destination;
+        }
+        courseSummaryModal.classList.remove('active');
+    });
+    
+    // Close modal when clicking outside
+    courseSummaryModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+        }
+    });
+    
+    // Initialize reusable chatbot
+    initReusableChatbot();
 });
+    
+    // Reusable Chatbot initialization
+    function initReusableChatbot() {
+        // Create a chatbot instance for the main page if it doesn't exist
+        if (!document.querySelector('#chatbotContainer')) {
+            createChatbot('main', document.body);
+        }
+        
+        // Example chatbot suggestions for different contexts
+        const chatbotSuggestions = {
+            main: [
+                "How do I earn XP?",
+                "What are achievements?",
+                "How do I change accessibility settings?",
+                "How do learning quests work?",
+                "What rewards can I earn?",
+                "Tell me a study tip",
+                "How do I track my progress?"
+            ],
+            english: [
+                "Explain the hero's journey",
+                "What are character archetypes?",
+                "Help with literary analysis",
+                "How do I identify themes in a story?",
+                "What are literary devices?",
+                "Tips for writing essays",
+                "How to analyze character development"
+            ],
+            filipino: [
+                "Who are the main characters in Noli Me Tangere?",
+                "What are the main themes of the novel?",
+                "Tell me about Jose Rizal",
+                "What is the historical context of Noli Me Tangere?",
+                "Explain Filipino literary traditions",
+                "Help with Filipino grammar",
+                "Tips for writing in Filipino"
+            ],
+            science: [
+                "Explain convergent boundaries",
+                "What causes earthquakes?",
+                "How do mountains form?",
+                "What is the difference between weather and climate?",
+                "How do volcanoes work?",
+                "Explain the rock cycle",
+                "What evidence supports plate tectonics?"
+            ],
+            math: [
+                "How do I factor a quadratic equation?",
+                "Explain the quadratic formula",
+                "When do I use completing the square?",
+                "What are the steps to solve word problems?",
+                "Help with graphing quadratic functions",
+                "Explain discriminants",
+                "How to find x-intercepts"
+            ]
+        };
+        
+        // Create global function to instantiate chatbots on subject pages
+        window.createSubjectChatbot = function(subjectName, container) {
+            createChatbot(subjectName, container, chatbotSuggestions[subjectName]);
+        };
+    }
+    
+    // Function to create a chatbot instance
+    function createChatbot(contextName, container, customSuggestions = null) {
+        // Clone the template
+        const template = document.getElementById('chatbotTemplate');
+        const chatbotClone = document.importNode(template.content, true);
+        
+        // Add unique ID to the container
+        const chatbotContainer = chatbotClone.querySelector('.chatbot-container');
+        chatbotContainer.id = 'chatbot-' + contextName;
+        
+        // Get elements
+        const chatbotToggle = chatbotClone.querySelector('.chatbot-toggle');
+        const chatbotWindow = chatbotClone.querySelector('.chatbot-window');
+        const chatbotClose = chatbotClone.querySelector('.chatbot-close');
+        const chatbotMessages = chatbotClone.querySelector('.chatbot-messages');
+        const chatbotSuggestions = chatbotClone.querySelector('.chatbot-suggestions');
+        const chatbotInput = chatbotClone.querySelector('.chatbot-input');
+        const chatbotSend = chatbotClone.querySelector('.chatbot-send');
+        
+        // Set context-specific welcome message
+        let welcomeMessage = "Hello! How can I help you with your learning journey today?";
+        if (contextName !== 'main') {
+            welcomeMessage = `Hello! I'm here to help you with your ${contextName} lesson. What would you like to know?`;
+        }
+        chatbotMessages.querySelector('.bot-message').textContent = welcomeMessage;
+        
+        // Add toggle functionality
+        chatbotToggle.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('hidden');
+            if (!chatbotWindow.classList.contains('hidden')) {
+                populateSuggestions(chatbotSuggestions, contextName, customSuggestions);
+                chatbotInput.focus();
+            }
+        });
+        
+        // Add close functionality
+        chatbotClose.addEventListener('click', () => {
+            chatbotWindow.classList.add('hidden');
+        });
+        
+        // Add input functionality
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && chatbotInput.value.trim() !== '') {
+                handleUserInput(chatbotInput.value.trim());
+            }
+        });
+        
+        chatbotSend.addEventListener('click', () => {
+            if (chatbotInput.value.trim() !== '') {
+                handleUserInput(chatbotInput.value.trim());
+            }
+        });
+        
+        // Handle user input
+        function handleUserInput(text) {
+            // Add user message
+            addChatMessage(chatbotMessages, text, 'user');
+            
+            // Clear input
+            chatbotInput.value = '';
+            
+            // Generate response
+            setTimeout(() => {
+                const response = generateResponse(text, contextName);
+                addChatMessage(chatbotMessages, response, 'bot');
+                
+                // Maybe suggest follow-up questions
+                setTimeout(() => {
+                    suggestFollowUp(text, contextName);
+                }, 500);
+            }, 600);
+        }
+        
+        // Suggest follow-up questions
+        function suggestFollowUp(userInput, context) {
+            let followUpSuggestions = [];
+            
+            const lowerInput = userInput.toLowerCase();
+            
+            // General follow-ups based on context
+            if (context === 'main') {
+                if (lowerInput.includes('xp') || lowerInput.includes('points')) {
+                    followUpSuggestions = [
+                        "How do I level up faster?",
+                        "What are XP streaks?",
+                        "What can I do with XP?"
+                    ];
+                } else if (lowerInput.includes('achievement') || lowerInput.includes('badge')) {
+                    followUpSuggestions = [
+                        "How many achievements are there?",
+                        "What's the rarest achievement?",
+                        "Do achievements give rewards?"
+                    ];
+                }
+            } else if (context === 'english') {
+                if (lowerInput.includes('hero') || lowerInput.includes('journey')) {
+                    followUpSuggestions = [
+                        "What is the call to adventure?",
+                        "Explain the mentor archetype",
+                        "What is the atonement stage?"
+                    ];
+                } else if (lowerInput.includes('theme') || lowerInput.includes('analysis')) {
+                    followUpSuggestions = [
+                        "How to identify symbolism",
+                        "What is foreshadowing?",
+                        "Explain imagery in literature"
+                    ];
+                }
+            } else if (context === 'math') {
+                if (lowerInput.includes('quadratic') || lowerInput.includes('equation')) {
+                    followUpSuggestions = [
+                        "When is a quadratic unsolvable?",
+                        "What are complex solutions?",
+                        "How to find axis of symmetry?"
+                    ];
+                }
+            }
+            
+            // If we have follow-ups, show them
+            if (followUpSuggestions.length > 0) {
+                // Clear current suggestions
+                chatbotSuggestions.innerHTML = '';
+                
+                // Add new suggestions with "Related:" label
+                const relatedLabel = document.createElement('div');
+                relatedLabel.style.width = '100%';
+                relatedLabel.style.fontSize = '0.8rem';
+                relatedLabel.style.opacity = '0.7';
+                relatedLabel.style.marginBottom = '5px';
+                relatedLabel.textContent = 'Related questions:';
+                chatbotSuggestions.appendChild(relatedLabel);
+                
+                followUpSuggestions.forEach(text => {
+                    const suggestionBtn = document.createElement('button');
+                    suggestionBtn.classList.add('suggestion-btn');
+                    suggestionBtn.textContent = text;
+                    
+                    suggestionBtn.addEventListener('click', () => {
+                        handleUserInput(text);
+                    });
+                    
+                    chatbotSuggestions.appendChild(suggestionBtn);
+                });
+            }
+        }
+        
+        // Append the chatbot to the container
+        container.appendChild(chatbotClone);
+        
+        // Function to populate suggestions based on context
+        function populateSuggestions(suggestionsContainer, context, customList = null) {
+            suggestionsContainer.innerHTML = ''; // Clear existing suggestions
+            
+            // Use custom suggestions if provided, otherwise use defaults
+            const suggestions = customList || [
+                "How do I earn XP?",
+                "What are achievements?",
+                "How do I change accessibility settings?"
+            ];
+            
+            suggestions.forEach(text => {
+                const suggestionBtn = document.createElement('button');
+                suggestionBtn.classList.add('suggestion-btn');
+                suggestionBtn.textContent = text;
+                
+                suggestionBtn.addEventListener('click', () => {
+                    handleUserInput(text);
+                });
+                
+                suggestionsContainer.appendChild(suggestionBtn);
+            });
+        }
+        
+        // Return chatbot elements for potential external manipulation
+        return {
+            container: chatbotContainer,
+            toggle: chatbotToggle,
+            window: chatbotWindow,
+            messages: chatbotMessages,
+            suggestions: chatbotSuggestions
+        };
+    }
+    
+    // Function to add a message to the chat
+    function addChatMessage(messagesContainer, text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender === 'bot' ? 'bot-message' : 'user-message');
+        messageDiv.textContent = text;
+        messagesContainer.appendChild(messageDiv);
+        // Scroll to the bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Function to generate responses
+    function generateResponse(text, context) {
+        const lowerText = text.toLowerCase();
+        
+        // Common responses across all contexts
+        if (lowerText.includes('hello') || lowerText.includes('hi ') || lowerText === 'hi') {
+            return "Hello there! How can I help you today?";
+        } else if (lowerText.includes('thank')) {
+            return "You're welcome! Is there anything else you'd like to know?";
+        } else if (lowerText.includes('bye') || lowerText.includes('goodbye')) {
+            return "Goodbye! Come back anytime you need help with your learning journey!";
+        } else if (lowerText.includes('xp') || lowerText.includes('experience points')) {
+            return "You earn XP (Experience Points) by completing lessons, quizzes, and activities. The more challenging the activity, the more XP you earn! You can use XP to level up and unlock new content and achievements.";
+        } else if (lowerText.includes('achievements') || lowerText.includes('badges')) {
+            return "Achievements are special rewards you earn for completing specific goals or milestones in your learning journey. They include badges for perfect quiz scores, completing lesson streaks, and mastering topics. Check the Achievements section to see what you've unlocked!";
+        } else if (lowerText.includes('accessibility')) {
+            return "You can change accessibility settings by clicking the accessibility icon in the header. Options include text-to-speech, dyslexia-friendly font, color blind mode, high contrast mode, and focus mode for ADHD.";
+        } else if (lowerText.includes('learn') && lowerText.includes('quest')) {
+            return "Learning quests are structured learning paths designed like game missions. Each quest has specific learning objectives, activities, and rewards. Complete quests to earn XP, coins, and achievements while mastering new knowledge!";
+        } else if (lowerText.includes('rewards')) {
+            return "You can earn various rewards like XP points, coins, achievement badges, and unlock special content. Coins can be used to customize your avatar and unlock special learning resources.";
+        } else if (lowerText.includes('study tip')) {
+            const tips = [
+                "Try the Pomodoro technique: study for 25 minutes, then take a 5-minute break.",
+                "Teaching others what you've learned helps solidify your understanding.",
+                "Regular review sessions are more effective than cramming the night before.",
+                "Create mind maps to visualize connections between concepts.",
+                "Study in different locations to improve memory retention.",
+                "Take handwritten notes rather than typing for better recall.",
+                "Use spaced repetition to review material at optimal intervals."
+            ];
+            return tips[Math.floor(Math.random() * tips.length)];
+        } else if (lowerText.includes('track') && lowerText.includes('progress')) {
+            return "You can track your progress on the dashboard. It shows your XP, level, completed quests, and achievements. Each subject card also displays your progress percentage for current quests.";
+        }
+        
+        // Context-specific responses
+        if (context === 'english') {
+            if (lowerText.includes("hero's journey") || lowerText.includes("hero journey")) {
+                return "The Hero's Journey is a narrative pattern identified by Joseph Campbell. It consists of stages including the Call to Adventure, Meeting the Mentor, Crossing the Threshold, Tests/Allies/Enemies, Approaching the Innermost Cave, Ordeal, Reward, Road Back, Resurrection, and Return with the Elixir. This pattern appears in countless stories across cultures and time periods.";
+            } else if (lowerText.includes("character archetypes")) {
+                return "Character archetypes are recurring character types found across literature. Common archetypes include the Hero, Mentor, Threshold Guardian, Herald, Shapeshifter, Shadow, Ally, and Trickster. Each serves a specific purpose in the narrative and represents universal human traits.";
+            } else if (lowerText.includes("literary analysis")) {
+                return "Literary analysis involves examining elements like plot, character, setting, point of view, symbolism, theme, and style to interpret a text's deeper meaning. It's about looking beyond the surface of what happens to understand why it happens and what it represents.";
+            } else if (lowerText.includes("theme")) {
+                return "To identify themes in a story, look for recurring ideas, concepts, or questions raised by the text. Analyze character development, conflicts, symbols, and how these elements connect to larger universal concepts like love, power, identity, or mortality.";
+            } else if (lowerText.includes("literary device")) {
+                return "Literary devices are techniques authors use to convey meaning and enhance their writing. Common examples include metaphor, simile, personification, foreshadowing, irony, symbolism, allegory, and imagery. These tools help create deeper layers of meaning in texts.";
+            }
+        } else if (context === 'math') {
+            if (lowerText.includes("factor") && lowerText.includes("quadratic")) {
+                return "To factor a quadratic equation (ax² + bx + c = 0): 1) Find two numbers that multiply to give ac and add up to b. 2) Rewrite the middle term using these numbers. 3) Group the terms and factor out common factors. For example, x² + 5x + 6 can be factored as (x + 2)(x + 3).";
+            } else if (lowerText.includes("quadratic formula")) {
+                return "The quadratic formula is x = (-b ± √(b² - 4ac)) / 2a for any quadratic equation in the form ax² + bx + c = 0. It gives you all solutions, including complex ones when the discriminant (b² - 4ac) is negative.";
+            } else if (lowerText.includes("completing the square")) {
+                return "Completing the square is used when you need to rewrite a quadratic expression in the form a(x - h)² + k. Steps: 1) Factor out any coefficient of x². 2) Group the x² and x terms. 3) Add and subtract the square of half the x coefficient. 4) Rewrite as a perfect square plus a constant.";
+            }
+        } else if (context === 'filipino') {
+            if (lowerText.includes("noli me tangere") && lowerText.includes("character")) {
+                return "Ang mga pangunahing tauhan sa Noli Me Tangere ay sina Crisostomo Ibarra, Maria Clara, Padre Damaso, Elias, Pilosopo Tasio, Sisa, at Kapitan Tiago. Bawat tauhan ay kumakatawan sa mga aspeto ng lipunang Pilipino noong panahon ng Espanyol.";
+            } else if (lowerText.includes("rizal")) {
+                return "Si Jose Rizal ay isang bayani ng Pilipinas, isang manunulat, doktor, at intelektuwal. Ipinanganak siya noong Hunyo 19, 1861 sa Calamba, Laguna. Sumulat siya ng mga nobelang Noli Me Tangere at El Filibusterismo na naglantad sa mga pang-aabuso ng pamahalaang Espanyol sa Pilipinas. Siya ay binaril sa Bagumbayan (ngayon ay Luneta) noong Disyembre 30, 1896.";
+            } else if (lowerText.includes("tema") || lowerText.includes("noli me tangere") && lowerText.includes("tema")) {
+                return "Ang mga pangunahing tema ng Noli Me Tangere ay kabilang ang: kolonyalismo at pang-aapi, pagkakaiba ng mga uri sa lipunan, kapangyarihan at katiwalian ng simbahan, edukasyon at kaliwanagan, pagmamahal sa bayan, at katarungan at paghihiganti.";
+            }
+        } else if (context === 'science') {
+            if (lowerText.includes("convergent boundar")) {
+                return "Convergent boundaries occur where tectonic plates move toward each other. When oceanic and continental plates converge, the denser oceanic plate subducts beneath the continental plate, creating features like trenches and volcanic mountains. When two continental plates converge, they form mountain ranges like the Himalayas.";
+            } else if (lowerText.includes("earthquake")) {
+                return "Earthquakes are caused by the sudden release of energy in the Earth's lithosphere, creating seismic waves. They typically occur along fault lines when tectonic plates suddenly slip past each other after building up stress. The point where the earthquake originates is called the hypocenter, while the point directly above it on the surface is the epicenter.";
+            } else if (lowerText.includes("mountain") && lowerText.includes("form")) {
+                return "Mountains form through several processes: 1) Tectonic plate collisions pushing land upward (fold mountains like the Himalayas), 2) Volcanic activity building up layers of material (volcanic mountains like Mt. Fuji), 3) Erosion of surrounding areas leaving resistant formations (residual mountains), and 4) Faulting, where blocks of crust move along faults (fault-block mountains like the Sierra Nevada).";
+            }
+        }
+        
+        // Default response if no specific match was found
+        return "That's an interesting question about " + context + ". I'm still learning about that specific topic. Can you try asking something else, or rephrase your question?";
+    }
     </script>
 
     <!-- Chatbot -->
@@ -5071,6 +5855,71 @@ body.color-blind-friendly {
             </div>
         </div>
     </div>
+
+    <!-- Course Summary Modal -->
+    <div class="modal-overlay" id="courseSummaryModal">
+        <div class="modal">
+            <div class="modal-header" id="courseSummaryHeader">
+                <div class="modal-title" id="courseSummaryTitle">Course Summary</div>
+                <button class="close-modal" id="closeSummaryModal">&times;</button>
+            </div>
+            <div class="modal-content">
+                <div id="courseSummaryContent">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+                <div class="progress-section" style="margin-top: 20px;">
+                    <div class="progress-info">
+                        <span>Course Progress</span>
+                        <span id="courseSummaryProgress">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="courseSummaryProgressBar" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="course-overview" style="margin-top: 25px;">
+                    <h3>What you'll learn</h3>
+                    <ul id="courseLearningPoints">
+                        <!-- Learning points will be dynamically inserted here -->
+                    </ul>
+                </div>
+                <div class="estimated-time" style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-clock" style="color: var(--accent);"></i>
+                    <span>Estimated time to complete: <strong id="courseEstimatedTime">45 minutes</strong></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-secondary" id="backToDashboardBtn">Back to Dashboard</button>
+                <button class="modal-btn btn-primary" id="continueToLessonBtn">Continue to Lesson</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reusable Chatbot Template -->
+    <template id="chatbotTemplate">
+        <div class="chatbot-container">
+            <div class="chatbot-window hidden">
+                <div class="chatbot-header">
+                    <span class="chatbot-title">Chat Assistant</span>
+                    <button class="chatbot-close">&times;</button>
+                </div>
+                <div class="chatbot-messages">
+                    <div class="message bot-message">Hello! How can I help you with your learning journey today?</div>
+                </div>
+                <div class="chatbot-input-container">
+                    <input type="text" class="chatbot-input" placeholder="Type your question here...">
+                    <button class="chatbot-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="chatbot-suggestions">
+                    <!-- Suggestions will be populated here -->
+                </div>
+            </div>
+            <button class="chatbot-toggle">
+                <i class="fas fa-robot"></i>
+            </button>
+        </div>
+    </template>
 </body>
 </html>
 
