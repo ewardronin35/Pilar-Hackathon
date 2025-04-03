@@ -173,6 +173,120 @@
     body.light-mode .stat i {
         color: var(--gradient-light-1);
     }
+    
+    /* Light mode specific styles for text-to-speech */
+    body.light-mode .speech-option {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--text-light);
+    }
+    
+    body.light-mode .speech-option:hover,
+    body.light-mode .speech-option.active {
+        background-color: var(--gradient-light-1);
+        color: white;
+    }
+    
+    body.light-mode .speech-option i {
+        color: var(--gradient-light-1);
+    }
+    
+    body.light-mode .speech-status {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--text-light);
+    }
+    
+    body.light-mode .text-to-speech-highlight {
+        background-color: var(--gradient-light-1);
+        color: white;
+    }
+    
+    body.light-mode .speech-control-btn {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--gradient-light-1);
+    }
+    
+    body.light-mode .speech-control-btn:hover {
+        background-color: var(--gradient-light-1);
+        color: white;
+    }
+    
+    body.light-mode .speech-demo-text {
+        background-color: rgba(37, 99, 235, 0.05);
+        color: var(--text-light);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+    }
+    
+    body.light-mode .option-section {
+        border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+    }
+    
+    body.light-mode .option-title i {
+        color: var(--gradient-light-1);
+    }
+    
+    /* Enhanced UI elements for light mode */
+    body.light-mode #gradeLevel {
+        background-color: white !important;
+        color: var(--text-light) !important;
+        border: 1px solid rgba(37, 99, 235, 0.2) !important;
+    }
+    
+    body.light-mode select option {
+        background-color: white;
+        color: var(--text-light);
+    }
+    
+    body.light-mode .quest-status {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--gradient-light-1);
+        font-weight: 600;
+    }
+    
+    body.light-mode .subject-card {
+        border: 1px solid rgba(191, 219, 254, 0.4);
+    }
+    
+    body.light-mode button:not(.btn-secondary):not(.close-modal):not(.theme-toggle) {
+        background: linear-gradient(90deg, var(--gradient-light-1), var(--gradient-light-2));
+        color: white;
+    }
+    
+    body.light-mode .modal-btn.btn-secondary {
+        background-color: white;
+        border: 1px solid rgba(37, 99, 235, 0.3);
+        color: var(--gradient-light-1);
+    }
+    
+    body.light-mode .modal-btn.btn-secondary:hover {
+        background-color: rgba(37, 99, 235, 0.05);
+    }
+    
+    /* Form controls in light mode */
+    body.light-mode .form-control {
+        background-color: white;
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        color: var(--text-light);
+    }
+    
+    body.light-mode .form-control:focus {
+        border-color: var(--gradient-light-1);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    
+    body.light-mode .form-label {
+        color: var(--text-light);
+        font-weight: 500;
+    }
+    
+    /* Fix scrollbars in light mode */
+    body.light-mode ::-webkit-scrollbar-thumb {
+        background: linear-gradient(90deg, var(--gradient-light-1), var(--gradient-light-2));
+        border-radius: 10px;
+    }
+    
+    body.light-mode ::-webkit-scrollbar-track {
+        background: rgba(191, 219, 254, 0.2);
+    }
         * {
             margin: 0;
             padding: 0;
@@ -1374,6 +1488,1267 @@ body.color-blind-friendly {
     padding: 5px 10px;
     border-radius: 5px;
 }
+
+    body.light-mode .stat i {
+        color: var(--gradient-light-1);
+    }
+    
+    .speech-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 8px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .speech-option:hover, .speech-option.active {
+        background-color: var(--primary);
+    }
+    
+    .speech-option i {
+        color: var(--accent);
+    }
+    
+    .speech-status {
+        display: none;
+        margin-top: 10px;
+        padding: 8px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.2);
+        font-size: 0.9rem;
+    }
+    
+    .speech-status.active {
+        display: block;
+    }
+
+    .text-to-speech-highlight {
+        background-color: var(--primary);
+        color: white;
+        cursor: pointer;
+    }
+
+    .text-speech-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .speech-control-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.2);
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .speech-control-btn:hover {
+        background-color: var(--primary);
+    }
+
+    .speech-demo-text {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+    
+    .option-description {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin-left: 30px;
+        max-width: 200px;
+    }
+
+    /* Light mode specific styles for text-to-speech */
+    body.light-mode .speech-option {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--text-light);
+    }
+    
+    body.light-mode .speech-option:hover,
+    body.light-mode .speech-option.active {
+        background-color: var(--gradient-light-1);
+        color: white;
+    }
+    
+    body.light-mode .speech-option i {
+        color: var(--gradient-light-1);
+    }
+    
+    body.light-mode .speech-status {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--text-light);
+    }
+    
+    body.light-mode .text-to-speech-highlight {
+        background-color: var(--gradient-light-1);
+        color: white;
+    }
+    
+    body.light-mode .speech-control-btn {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--gradient-light-1);
+    }
+    
+    body.light-mode .speech-control-btn:hover {
+        background-color: var(--gradient-light-1);
+        color: white;
+    }
+    
+    body.light-mode .speech-demo-text {
+        background-color: rgba(37, 99, 235, 0.05);
+        color: var(--text-light);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+    }
+    
+    body.light-mode .option-section {
+        border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+    }
+    
+    body.light-mode .option-title i {
+        color: var(--gradient-light-1);
+    }
+    
+    /* Enhanced UI elements for light mode */
+    body.light-mode #gradeLevel {
+        background-color: white !important;
+        color: var(--text-light) !important;
+        border: 1px solid rgba(37, 99, 235, 0.2) !important;
+    }
+    
+    body.light-mode select option {
+        background-color: white;
+        color: var(--text-light);
+    }
+    
+    body.light-mode .quest-status {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--gradient-light-1);
+        font-weight: 600;
+    }
+    
+    body.light-mode .subject-card {
+        border: 1px solid rgba(191, 219, 254, 0.4);
+    }
+    
+    body.light-mode button:not(.btn-secondary):not(.close-modal):not(.theme-toggle) {
+        background: linear-gradient(90deg, var(--gradient-light-1), var(--gradient-light-2));
+        color: white;
+    }
+    
+    body.light-mode .modal-btn.btn-secondary {
+        background-color: white;
+        border: 1px solid rgba(37, 99, 235, 0.3);
+        color: var(--gradient-light-1);
+    }
+    
+    body.light-mode .modal-btn.btn-secondary:hover {
+        background-color: rgba(37, 99, 235, 0.05);
+    }
+    
+    /* Form controls in light mode */
+    body.light-mode .form-control {
+        background-color: white;
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        color: var(--text-light);
+    }
+    
+    body.light-mode .form-control:focus {
+        border-color: var(--gradient-light-1);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    
+    body.light-mode .form-label {
+        color: var(--text-light);
+        font-weight: 500;
+    }
+    
+    /* Fix scrollbars in light mode */
+    body.light-mode ::-webkit-scrollbar-thumb {
+        background: linear-gradient(90deg, var(--gradient-light-1), var(--gradient-light-2));
+        border-radius: 10px;
+    }
+    
+    body.light-mode ::-webkit-scrollbar-track {
+        background: rgba(191, 219, 254, 0.2);
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Gamified Header */
+        header {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo i {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 2rem;
+        }
+
+        .user-stats {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+
+        .stat i {
+            color: var(--accent);
+        }
+
+        .stat-value {
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 5px 15px 5px 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-level {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .welcome-message {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .welcome-message::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            border-radius: 2px;
+        }
+
+        .sub-message {
+            opacity: 0.8;
+        }
+
+        /* Quest Board */
+        .quest-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .subject-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(114, 9, 183, 0.2), rgba(76, 201, 240, 0.2));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .subject-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            padding: 20px;
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, var(--card-bg), transparent);
+        }
+
+        .english-bg {
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+        }
+
+        .filipino-bg {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+        }
+
+        .science-bg {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf);
+        }
+
+        .math-bg {
+            background: linear-gradient(135deg, #fb923c, #f97316);
+        }
+
+        .subject-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subject-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .english-icon {
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+        }
+
+        .filipino-icon {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+        }
+
+        .science-icon {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf);
+        }
+
+        .math-icon {
+            background: linear-gradient(135deg, #fb923c, #f97316);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .quest-progress {
+            margin-top: 15px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .english-progress {
+            background: linear-gradient(90deg, #4cc9f0, #3a86ff);
+        }
+
+        .filipino-progress {
+            background: linear-gradient(90deg, #f72585, #b5179e);
+        }
+
+        .science-progress {
+            background: linear-gradient(90deg, #4ade80, #2dd4bf);
+        }
+
+        .math-progress {
+            background: linear-gradient(90deg, #fb923c, #f97316);
+        }
+
+        .rewards-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .rewards {
+            display: flex;
+            gap: 5px;
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reward-item i {
+            color: var(--warning);
+        }
+
+        .quest-status {
+            background-color: rgba(79, 70, 229, 0.2);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .quest-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .quest-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(114, 9, 183, 0.4);
+        }
+
+        /* Achievements Section */
+        .achievements-section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--warning);
+        }
+
+        .view-all {
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-all:hover {
+            opacity: 0.8;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 15px 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .achievement:hover {
+            transform: translateY(-5px);
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .achievement-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .achievement-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .achievement-progress {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .english-activity {
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+        }
+
+        .filipino-activity {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+        }
+
+        .science-activity {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf);
+        }
+
+        .math-activity {
+            background: linear-gradient(135deg, #fb923c, #f97316);
+        }
+
+        .activity-content {
+            flex-grow: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .activity-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .activity-rewards {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .xp-reward, .coin-reward {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .xp-reward i {
+            color: var(--accent);
+        }
+
+        .coin-reward i {
+            color: var(--warning);
+        }
+
+        /* Welcome Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh; /* Limit height */
+            overflow-y: auto; /* Enable scrolling */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .modal-content {
+            padding: 25px;
+            max-height: 60vh; /* Limit content height */
+            overflow-y: auto; /* Enable scrolling */
+        }
+        @media (max-width: 600px) {
+            .modal {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .modal-content {
+                padding: 15px;
+            }
+
+            .avatar-selection {
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .avatar-option {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .modal-subtitle {
+            opacity: 0.9;
+        }
+
+        .modal-content {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(114, 9, 183, 0.2);
+        }
+
+        .avatar-selection {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .avatar-option:hover, .avatar-option.selected {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        .avatar-1 {
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+        }
+
+        .avatar-2 {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+        }
+
+        .avatar-3 {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf);
+        }
+
+        .avatar-4 {
+            background: linear-gradient(135deg, #fb923c, #f97316);
+        }
+
+        .accessibility-options {
+            margin-top: 25px;
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-title i {
+            color: var(--accent);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .checkbox-option:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .checkbox-input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox-input:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .checkbox-label {
+            font-size: 0.95rem;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding-right: 35px;
+            position: relative;
+        }
+
+        .btn-primary::after {
+            content: '\f054';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(114, 9, 183, 0.4);
+        }
+
+        .btn-primary:hover::after {
+            transform: translate(5px, -50%);
+        }
+
+        /* Accessibility Styles */
+        body.dyslexia-friendly {
+            font-family: 'OpenDyslexic', 'Comic Sans MS', cursive;
+            letter-spacing: 0.05em;
+            word-spacing: 0.1em;
+            line-height: 1.8;
+        }
+
+        body.high-contrast {
+            --bg: #000;
+            --card-bg: #111;
+            --text: #fff;
+        }
+
+        body.color-blind-friendly .english-icon,
+        body.color-blind-friendly .english-progress,
+        body.color-blind-friendly .english-activity {
+            background: linear-gradient(135deg, #ffbe0b, #fb5607);
+        }
+
+        body.color-blind-friendly .filipino-icon,
+        body.color-blind-friendly .filipino-progress,
+        body.color-blind-friendly .filipino-activity {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+        }
+
+        body.color-blind-friendly .science-icon,
+        body.color-blind-friendly .science-progress,
+        body.color-blind-friendly .science-activity {
+            background: linear-gradient(135deg, #3a86ff, #0096c7);
+        }
+
+        body.color-blind-friendly .math-icon,
+        body.color-blind-friendly .math-progress,
+        body.color-blind-friendly .math-activity {
+            background: linear-gradient(135deg, #06d6a0, #1b9aaa);
+        }
+
+        /* Focus Mode for ADHD */
+        body.focus-mode .subject-card:not(:hover),
+        body.focus-mode .achievement:not(:hover),
+        body.focus-mode .activity-item:not(:hover) {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
+
+        body.focus-mode .subject-card:hover,
+        body.focus-mode .achievement:hover,
+        body.focus-mode .activity-item:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .user-stats {
+                display: none;
+            }
+
+            .welcome-message {
+                font-size: 1.5rem;
+            }
+
+            .achievement-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+        }
+
+        /* Loader for Slow Connection */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 101;
+            display: none;
+        }
+
+        .loader {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        body.slow-connection .loader-overlay {
+            display: block;
+        }
+
+        /* Chatbot Styles */
+        #chatbotContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001; /* Above header */
+        }
+
+        #chatbotToggle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #chatbotToggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(114, 9, 183, 0.5);
+        }
+
+        #chatbotWindow {
+            position: absolute;
+            bottom: 80px; /* Above the toggle button */
+            right: 0;
+            width: 350px;
+            max-height: 450px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform-origin: bottom right;
+        }
+
+        #chatbotWindow.hidden {
+            transform: scale(0);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        #chatbotClose {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        #chatbotClose:hover {
+            opacity: 1;
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background-color: rgba(76, 201, 240, 0.2); /* Accent color lightened */
+            color: var(--accent);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        .user-message {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .chatbot-suggestions {
+            padding: 10px 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 100px; /* Limit suggestion height */
+            overflow-y: auto;
+        }
+
+        .suggestion-btn {
+            background-color: rgba(76, 201, 240, 0.3); /* Accent */
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-btn:hover {
+            background-color: var(--accent);
+            color: var(--card-bg);
+        }
 
     body.light-mode .stat i {
         color: var(--gradient-light-1);
@@ -3470,10 +4845,6 @@ body.color-blind-friendly {
                         <input type="text" class="form-control" id="userName" placeholder="Enter your name" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="userEmail">Your Email</label>
-                        <input type="email" class="form-control" id="userEmail" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
                         <label class="form-label" for="gradeLevel">Grade Level</label>
                         <select class="form-control" id="gradeLevel" style="background-color: var(--card-bg); color: var(--text); border: 1px solid var(--accent);">
                             <option value="" style="color: var(--text);">Select your grade</option>
@@ -3609,7 +4980,7 @@ body.color-blind-friendly {
             const welcomeModal = document.getElementById('welcomeModal');
             const userProfileForm = document.getElementById('userProfileForm');
             const userName = document.getElementById('userName');
-            const userEmail = document.getElementById('userEmail');
+            // userEmail variable removed since we removed the email field
             const gradeLevel = document.getElementById('gradeLevel');
             const avatarOptions = document.querySelectorAll('.avatar-option');
             const skipButton = document.getElementById('skipButton');
@@ -3881,11 +5252,7 @@ body.color-blind-friendly {
                     return;
                 }
                 
-                if (userEmail.value.trim() === '') {
-                    userEmail.focus();
-                    userEmail.style.borderColor = 'var(--danger)';
-                    return;
-                }
+                // Email validation removed since we removed the email field
                 
                 // Get first name for display
                 const name = userName.value.trim().split(' ')[0];
@@ -3964,11 +5331,7 @@ body.color-blind-friendly {
                 }
             });
             
-            userEmail.addEventListener('input', function() {
-                if (this.value.trim() !== '') {
-                    this.style.borderColor = '';
-                }
-            });
+            // userEmail event listener removed since we removed the email field
             
             // Slow connection simulation
             function simulateSlowLoading() {
@@ -4634,11 +5997,7 @@ body.color-blind-friendly {
                     return;
                 }
                 
-                if (userEmail.value.trim() === '') {
-                    userEmail.focus();
-                    userEmail.style.borderColor = 'var(--danger)';
-                    return;
-                }
+                // Email validation removed since we removed the email field
                 
                 // Get first name for display
                 const name = userName.value.trim().split(' ')[0];
@@ -4744,11 +6103,7 @@ body.color-blind-friendly {
                 }
             });
             
-            userEmail.addEventListener('input', function() {
-                if (this.value.trim() !== '') {
-                    this.style.borderColor = '';
-                }
-            });
+            // userEmail event listener removed since we removed the email field
             
             // Slow connection simulation
             function simulateSlowLoading() {

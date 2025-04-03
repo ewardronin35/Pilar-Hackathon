@@ -37,11 +37,20 @@ function setLanguage(langCode) {
     
     // Update form labels
     document.querySelector('label[for="userName"]').textContent = selectedLang.welcome.name;
-    document.querySelector('label[for="userEmail"]').textContent = selectedLang.welcome.email;
+    // Remove email reference since it's been removed from the form
     document.querySelector('label[for="gradeLevel"]').textContent = selectedLang.welcome.gradeLevel;
     
-    // Update avatar and accessibility section labels
-    document.querySelector('.option-title span').textContent = selectedLang.welcome.accessibilityOptions;
+    // Update avatar label
+    const avatarLabel = document.querySelector('.form-group .form-label:not([for])');
+    if (avatarLabel) {
+        avatarLabel.textContent = selectedLang.welcome.avatarSelection;
+    }
+    
+    // Update accessibility section labels
+    const accessibilityTitle = document.querySelector('.option-title');
+    if (accessibilityTitle) {
+        accessibilityTitle.textContent = selectedLang.welcome.accessibilityOptions;
+    }
     
     // Update buttons
     document.getElementById('skipButton').textContent = selectedLang.welcome.skipButton;
@@ -53,28 +62,37 @@ function setLanguage(langCode) {
 
 // Language selector in the header
 function createLanguageSelector() {
+    // Check if the language selector already exists to avoid duplicates
+    if (document.querySelector('.language-selector')) {
+        return;
+    }
+    
     const languageDropdown = document.createElement('div');
     languageDropdown.className = 'language-selector';
     languageDropdown.innerHTML = `
-        <select id="languageSelect">
+        <select id="languageSelect" style="background-color: var(--card-bg); color: var(--text); border: 1px solid var(--accent); padding: 5px 10px; border-radius: 5px;">
             <option value="en">English</option>
             <option value="fil">Filipino</option>
         </select>
     `;
     
-    // Add to header
+    // Add to header - make sure the header-content exists
     const headerContent = document.querySelector('.header-content');
-    headerContent.appendChild(languageDropdown);
-    
-    // Event listener for language change
-    document.getElementById('languageSelect').addEventListener('change', function() {
-        setLanguage(this.value);
-    });
-    
-    // Load saved language preference
-    const savedLang = localStorage.getItem('pilarLanguage') || 'en';
-    setLanguage(savedLang);
-    document.getElementById('languageSelect').value = savedLang;
+    if (headerContent) {
+        headerContent.appendChild(languageDropdown);
+        
+        // Event listener for language change
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            setLanguage(this.value);
+        });
+        
+        // Load saved language preference
+        const savedLang = localStorage.getItem('pilarLanguage') || 'en';
+        setLanguage(savedLang);
+        document.getElementById('languageSelect').value = savedLang;
+    } else {
+        console.error('Header content element not found');
+    }
 }
 
 // Initialize on page load
