@@ -146,7 +146,7 @@
         }
 
         .course-header {
-            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff) !important;
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
@@ -176,7 +176,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff) !important;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
@@ -231,7 +231,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 5px;
-            background: linear-gradient(90deg, #4cc9f0, #3a86ff);
+            background: linear-gradient(90deg, #4cc9f0, #3a86ff) !important;
             width: 75%;
         }
 
@@ -302,7 +302,7 @@
         }
 
         .lesson-title i {
-            color: #4cc9f0;
+            color: #4cc9f0 !important;
         }
 
         .lesson-status {
@@ -425,7 +425,7 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff) !important;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -885,7 +885,347 @@
                     });
                 }
             });
+
+            // Add chatbot functionality
+            initChatbot();
         });
+
+        // Initialize the chatbot
+        function initChatbot() {
+            // Create chatbot elements if they don't exist
+            if (!document.querySelector('.chatbot-container')) {
+                createChatbotElements();
+            }
+
+            const chatbotToggle = document.querySelector('.chatbot-toggle');
+            const chatbotContainer = document.querySelector('.chatbot-container');
+            const chatbotClose = document.querySelector('.chatbot-close');
+            const chatbotForm = document.querySelector('.chatbot-form');
+            const chatbotInput = document.querySelector('.chatbot-input');
+            const chatbotMessages = document.querySelector('.chatbot-messages');
+            const chatbotSuggestions = document.querySelector('.chatbot-suggestions');
+
+            // Toggle chatbot visibility
+            chatbotToggle.addEventListener('click', () => {
+                chatbotContainer.classList.toggle('chatbot-hidden');
+                if (!chatbotContainer.classList.contains('chatbot-hidden')) {
+                    populateSuggestions(chatbotSuggestions, 'english');
+                }
+            });
+
+            // Close chatbot
+            chatbotClose.addEventListener('click', () => {
+                chatbotContainer.classList.add('chatbot-hidden');
+            });
+
+            // Handle form submission
+            chatbotForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = chatbotInput.value.trim();
+                if (message) {
+                    addChatMessage(chatbotMessages, message, 'user');
+                    chatbotInput.value = '';
+                    
+                    // Process the message and generate a response
+                    setTimeout(() => {
+                        const response = generateEnglishResponse(message);
+                        addChatMessage(chatbotMessages, response, 'bot');
+                        
+                        // Suggest follow-up questions
+                        const followUps = suggestFollowUp(message, 'english');
+                        populateSuggestions(chatbotSuggestions, 'english', followUps);
+                    }, 500);
+                }
+            });
+
+            // Initial suggestions
+            populateSuggestions(chatbotSuggestions, 'english');
+        }
+
+        // Create chatbot elements
+        function createChatbotElements() {
+            const chatbotHTML = `
+                <div class="chatbot-toggle">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <div class="chatbot-container chatbot-hidden">
+                    <div class="chatbot-header">
+                        <h3><i class="fas fa-robot"></i> Learning Assistant</h3>
+                        <button class="chatbot-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="chatbot-messages"></div>
+                    <div class="chatbot-suggestions"></div>
+                    <form class="chatbot-form">
+                        <input type="text" class="chatbot-input" placeholder="Ask me about the Hero's Journey...">
+                        <button type="submit" class="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            `;
+
+            const chatbotStyles = `
+                <style>
+                    .chatbot-toggle {
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        width: 60px;
+                        height: 60px;
+                        background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                        z-index: 1000;
+                        font-size: 24px;
+                        color: white;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .chatbot-toggle:hover {
+                        transform: scale(1.1);
+                    }
+                    
+                    .chatbot-container {
+                        position: fixed;
+                        bottom: 90px;
+                        right: 20px;
+                        width: 350px;
+                        height: 500px;
+                        background-color: var(--card-bg);
+                        border-radius: 15px;
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                        z-index: 1000;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .chatbot-hidden {
+                        transform: translateY(20px);
+                        opacity: 0;
+                        pointer-events: none;
+                    }
+                    
+                    .chatbot-header {
+                        background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+                        padding: 15px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        color: white;
+                    }
+                    
+                    .chatbot-header h3 {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        margin: 0;
+                        font-size: 16px;
+                    }
+                    
+                    .chatbot-close {
+                        background: transparent;
+                        border: none;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 18px;
+                    }
+                    
+                    .chatbot-messages {
+                        flex: 1;
+                        padding: 15px;
+                        overflow-y: auto;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                    
+                    .message {
+                        padding: 10px 15px;
+                        border-radius: 18px;
+                        max-width: 80%;
+                        word-break: break-word;
+                    }
+                    
+                    .user-message {
+                        background-color: rgba(76, 201, 240, 0.1);
+                        align-self: flex-end;
+                        border-bottom-right-radius: 4px;
+                    }
+                    
+                    .bot-message {
+                        background-color: rgba(255, 255, 255, 0.05);
+                        align-self: flex-start;
+                        border-bottom-left-radius: 4px;
+                    }
+                    
+                    .chatbot-suggestions {
+                        padding: 10px 15px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                    }
+                    
+                    .suggestion-btn {
+                        background-color: rgba(76, 201, 240, 0.1);
+                        border: 1px solid rgba(76, 201, 240, 0.3);
+                        border-radius: 15px;
+                        padding: 6px 12px;
+                        font-size: 13px;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        color: var(--text);
+                    }
+                    
+                    .suggestion-btn:hover {
+                        background-color: rgba(76, 201, 240, 0.2);
+                    }
+                    
+                    .chatbot-form {
+                        padding: 15px;
+                        display: flex;
+                        gap: 10px;
+                        border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                    
+                    .chatbot-input {
+                        flex: 1;
+                        padding: 10px 15px;
+                        border-radius: 20px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        background-color: rgba(255, 255, 255, 0.05);
+                        color: var(--text);
+                        font-size: 14px;
+                    }
+                    
+                    .chatbot-input:focus {
+                        outline: none;
+                        border-color: rgba(76, 201, 240, 0.5);
+                    }
+                    
+                    .chatbot-send {
+                        width: 40px;
+                        height: 40px;
+                        background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+                        border: none;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        color: white;
+                    }
+                </style>
+            `;
+
+            // Append the HTML and styles to the body
+            const div = document.createElement('div');
+            div.innerHTML = chatbotHTML + chatbotStyles;
+            document.body.appendChild(div);
+        }
+
+        // Function to generate a response (English specific)
+        function generateEnglishResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes("hero's journey") || lowerMessage.includes("hero journey")) {
+                return "The Hero's Journey is a narrative structure identified by Joseph Campbell. It describes the typical adventure of the archetype known as The Hero, who goes on an adventure, faces a crisis, wins a victory, and then comes home changed. This pattern appears in ancient myths as well as modern stories.";
+            } else if (lowerMessage.includes("archetype") || lowerMessage.includes("character type")) {
+                return "Archetypes are recurring patterns or character types in literature. Common archetypes include the hero, mentor, threshold guardian, herald, shapeshifter, shadow, ally, and trickster. Each serves a specific function in the Hero's Journey narrative.";
+            } else if (lowerMessage.includes("literary analysis") || lowerMessage.includes("analyze literature")) {
+                return "Literary analysis involves examining elements like plot, character, setting, point of view, symbolism, and theme. For the Hero's Journey in particular, we look at how the protagonist transforms through challenges and how this reflects universal human experiences.";
+            } else if (lowerMessage.includes("symbolism")) {
+                return "Symbolism in literature is when objects, characters, figures, or colors represent abstract ideas or concepts. In the Hero's Journey, common symbols include thresholds (representing major life transitions), supernatural aid (wisdom), and the return (transformation).";
+            } else {
+                return "I'm your English literature assistant. I can help with questions about the Hero's Journey, literary analysis, character archetypes, and more. What would you like to learn about?";
+            }
+        }
+
+        // Function to suggest follow-up questions
+        function suggestFollowUp(message, context) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (context === 'english') {
+                if (lowerMessage.includes("hero") || lowerMessage.includes("journey")) {
+                    return [
+                        "What are the 12 stages of the Hero's Journey?",
+                        "How does the Hero's Journey apply to modern films?",
+                        "Who is Joseph Campbell?"
+                    ];
+                } else if (lowerMessage.includes("symbol") || lowerMessage.includes("theme")) {
+                    return [
+                        "What are common symbols in literature?",
+                        "How do I identify the theme of a story?",
+                        "What's the difference between motif and symbol?"
+                    ];
+                } else if (lowerMessage.includes("character") || lowerMessage.includes("archetype")) {
+                    return [
+                        "What is the mentor archetype?",
+                        "How do flat and round characters differ?",
+                        "What is character development?"
+                    ];
+                } else {
+                    // Default English suggestions
+                    return [
+                        "Explain the Hero's Journey",
+                        "What are literary archetypes?",
+                        "How do I analyze literature?"
+                    ];
+                }
+            }
+        }
+
+        // Function to populate the suggestion buttons
+        function populateSuggestions(suggestionsContainer, context, customList = null) {
+            suggestionsContainer.innerHTML = ''; // Clear existing suggestions
+            
+            // Use custom suggestions if provided, otherwise use defaults for English
+            const suggestions = customList || [
+                "Explain the Hero's Journey",
+                "What are literary archetypes?",
+                "How do I analyze symbolism?",
+                "Tell me about character development"
+            ];
+            
+            suggestions.forEach(text => {
+                const suggestionBtn = document.createElement('button');
+                suggestionBtn.classList.add('suggestion-btn');
+                suggestionBtn.textContent = text;
+                
+                suggestionBtn.addEventListener('click', () => {
+                    const chatbotMessages = document.querySelector('.chatbot-messages');
+                    const chatbotSuggestions = document.querySelector('.chatbot-suggestions');
+                    
+                    // Add the user message
+                    addChatMessage(chatbotMessages, text, 'user');
+                    
+                    // Generate and add the bot response
+                    setTimeout(() => {
+                        const response = generateEnglishResponse(text);
+                        addChatMessage(chatbotMessages, response, 'bot');
+                        
+                        // Suggest follow-ups
+                        const followUps = suggestFollowUp(text, 'english');
+                        populateSuggestions(chatbotSuggestions, 'english', followUps);
+                    }, 500);
+                });
+                
+                suggestionsContainer.appendChild(suggestionBtn);
+            });
+        }
+
+        // Function to add a message to the chat
+        function addChatMessage(messagesContainer, text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'bot' ? 'bot-message' : 'user-message');
+            messageDiv.textContent = text;
+            messagesContainer.appendChild(messageDiv);
+            // Scroll to the bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
     </script>
 </body>
 </html>

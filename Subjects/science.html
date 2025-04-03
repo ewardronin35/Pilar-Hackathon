@@ -938,7 +938,378 @@
                     });
                 }
             });
+
+            // Add chatbot functionality
+            initChatbot();
         });
+
+        // Initialize the chatbot
+        function initChatbot() {
+            // Create chatbot elements if they don't exist
+            if (!document.querySelector('.chatbot-container')) {
+                createChatbotElements();
+            }
+
+            const chatbotToggle = document.querySelector('.chatbot-toggle');
+            const chatbotContainer = document.querySelector('.chatbot-container');
+            const chatbotClose = document.querySelector('.chatbot-close');
+            const chatbotForm = document.querySelector('.chatbot-form');
+            const chatbotInput = document.querySelector('.chatbot-input');
+            const chatbotMessages = document.querySelector('.chatbot-messages');
+            const chatbotSuggestions = document.querySelector('.chatbot-suggestions');
+
+            // Toggle chatbot visibility
+            chatbotToggle.addEventListener('click', () => {
+                chatbotContainer.classList.toggle('chatbot-hidden');
+                if (!chatbotContainer.classList.contains('chatbot-hidden')) {
+                    populateSuggestions(chatbotSuggestions, 'science');
+                }
+            });
+
+            // Close chatbot
+            chatbotClose.addEventListener('click', () => {
+                chatbotContainer.classList.add('chatbot-hidden');
+            });
+
+            // Handle form submission
+            chatbotForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = chatbotInput.value.trim();
+                if (message) {
+                    addChatMessage(chatbotMessages, message, 'user');
+                    chatbotInput.value = '';
+                    
+                    // Process the message and generate a response
+                    setTimeout(() => {
+                        const response = generateScienceResponse(message);
+                        addChatMessage(chatbotMessages, response, 'bot');
+                        
+                        // Suggest follow-up questions
+                        const followUps = suggestFollowUp(message, 'science');
+                        populateSuggestions(chatbotSuggestions, 'science', followUps);
+                    }, 500);
+                }
+            });
+
+            // Initial suggestions
+            populateSuggestions(chatbotSuggestions, 'science');
+        }
+
+        // Create chatbot elements
+        function createChatbotElements() {
+            const chatbotHTML = `
+                <div class="chatbot-toggle">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <div class="chatbot-container chatbot-hidden">
+                    <div class="chatbot-header">
+                        <h3><i class="fas fa-robot"></i> Science Assistant</h3>
+                        <button class="chatbot-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="chatbot-messages"></div>
+                    <div class="chatbot-suggestions"></div>
+                    <form class="chatbot-form">
+                        <input type="text" class="chatbot-input" placeholder="Ask me about plate tectonics...">
+                        <button type="submit" class="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            `;
+
+            const chatbotStyles = `
+                <style>
+                    .chatbot-toggle {
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        width: 60px;
+                        height: 60px;
+                        background: linear-gradient(135deg, #4ade80, #2dd4bf);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                        z-index: 1000;
+                        font-size: 24px;
+                        color: white;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .chatbot-toggle:hover {
+                        transform: scale(1.1);
+                    }
+                    
+                    .chatbot-container {
+                        position: fixed;
+                        bottom: 90px;
+                        right: 20px;
+                        width: 350px;
+                        height: 500px;
+                        background-color: var(--card-bg);
+                        border-radius: 15px;
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                        z-index: 1000;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .chatbot-hidden {
+                        transform: translateY(20px);
+                        opacity: 0;
+                        pointer-events: none;
+                    }
+                    
+                    .chatbot-header {
+                        background: linear-gradient(135deg, #4ade80, #2dd4bf);
+                        padding: 15px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        color: white;
+                    }
+                    
+                    .chatbot-header h3 {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        margin: 0;
+                        font-size: 16px;
+                    }
+                    
+                    .chatbot-close {
+                        background: transparent;
+                        border: none;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 18px;
+                    }
+                    
+                    .chatbot-messages {
+                        flex: 1;
+                        padding: 15px;
+                        overflow-y: auto;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                    
+                    .message {
+                        padding: 10px 15px;
+                        border-radius: 18px;
+                        max-width: 80%;
+                        word-break: break-word;
+                    }
+                    
+                    .user-message {
+                        background-color: rgba(74, 222, 128, 0.1);
+                        align-self: flex-end;
+                        border-bottom-right-radius: 4px;
+                    }
+                    
+                    .bot-message {
+                        background-color: rgba(255, 255, 255, 0.05);
+                        align-self: flex-start;
+                        border-bottom-left-radius: 4px;
+                    }
+                    
+                    .chatbot-suggestions {
+                        padding: 10px 15px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                    }
+                    
+                    .suggestion-btn {
+                        background-color: rgba(74, 222, 128, 0.1);
+                        border: 1px solid rgba(74, 222, 128, 0.3);
+                        border-radius: 15px;
+                        padding: 6px 12px;
+                        font-size: 13px;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        color: var(--text);
+                    }
+                    
+                    .suggestion-btn:hover {
+                        background-color: rgba(74, 222, 128, 0.2);
+                    }
+                    
+                    .chatbot-form {
+                        padding: 15px;
+                        display: flex;
+                        gap: 10px;
+                        border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                    
+                    .chatbot-input {
+                        flex: 1;
+                        padding: 10px 15px;
+                        border-radius: 20px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        background-color: rgba(255, 255, 255, 0.05);
+                        color: var(--text);
+                        font-size: 14px;
+                    }
+                    
+                    .chatbot-input:focus {
+                        outline: none;
+                        border-color: rgba(74, 222, 128, 0.5);
+                    }
+                    
+                    .chatbot-send {
+                        width: 40px;
+                        height: 40px;
+                        background: linear-gradient(135deg, #4ade80, #2dd4bf);
+                        border: none;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        color: white;
+                    }
+                </style>
+            `;
+
+            // Append the HTML and styles to the body
+            const div = document.createElement('div');
+            div.innerHTML = chatbotHTML + chatbotStyles;
+            document.body.appendChild(div);
+        }
+
+        // Function to generate a response (Science specific)
+        function generateScienceResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes("plate tectonic") || lowerMessage.includes("earth's crust")) {
+                return "Plate tectonics is the theory that Earth's outer shell is divided into large plates that move over the asthenosphere. These plates interact at boundaries, causing earthquakes, volcanic activity, mountain-building, and oceanic trench formation.";
+            } else if (lowerMessage.includes("earthquake") || lowerMessage.includes("seismic")) {
+                return "Earthquakes are the result of sudden energy releases in the Earth's crust, creating seismic waves. They most commonly occur at plate boundaries when stress accumulated over time is released. The focus is the point where the earthquake originates, while the epicenter is the point on the surface directly above the focus.";
+            } else if (lowerMessage.includes("volcano") || lowerMessage.includes("eruption")) {
+                return "Volcanoes form when magma from the Earth's upper mantle rises through the crust and erupts on the surface. They commonly occur at convergent and divergent plate boundaries, as well as at hot spots. Eruption types range from effusive (gentle lava flows) to explosive (violent ejections of fragmented material).";
+            } else if (lowerMessage.includes("continental drift") || lowerMessage.includes("pangea")) {
+                return "Continental drift is the hypothesis that continents move across Earth's surface. Proposed by Alfred Wegener in 1912, it was the precursor to plate tectonics theory. Wegener suggested all continents were once joined in a supercontinent called Pangaea that broke apart about 200 million years ago.";
+            } else if (lowerMessage.includes("boundary") || lowerMessage.includes("convergent") || lowerMessage.includes("divergent") || lowerMessage.includes("transform")) {
+                return "There are three main types of plate boundaries: Convergent (where plates move toward each other, causing subduction or collision), Divergent (where plates move apart, creating new crust), and Transform (where plates slide past each other horizontally). Each type produces distinctive geological features.";
+            } else {
+                return "I'm your Earth Science assistant. I can help with questions about plate tectonics, earthquakes, volcanoes, Earth's structure, and more. What would you like to learn about?";
+            }
+        }
+
+        // Function to suggest follow-up questions
+        function suggestFollowUp(message, context) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (context === 'science') {
+                if (lowerMessage.includes("plate") || lowerMessage.includes("tectonic")) {
+                    return [
+                        "What are the three types of plate boundaries?",
+                        "How do scientists measure plate movement?",
+                        "What causes plates to move?"
+                    ];
+                } else if (lowerMessage.includes("earthquake") || lowerMessage.includes("seismic")) {
+                    return [
+                        "How are earthquakes measured?",
+                        "What is the Ring of Fire?",
+                        "Can earthquakes be predicted?"
+                    ];
+                } else if (lowerMessage.includes("volcano") || lowerMessage.includes("eruption")) {
+                    return [
+                        "What are the different types of volcanoes?",
+                        "How do hot spots form volcanoes?",
+                        "What was the largest volcanic eruption in history?"
+                    ];
+                } else if (lowerMessage.includes("continental") || lowerMessage.includes("drift")) {
+                    return [
+                        "What evidence supports continental drift?",
+                        "Who was Alfred Wegener?",
+                        "How did Pangaea break apart?"
+                    ];
+                } else {
+                    // Default science suggestions
+                    return [
+                        "Explain plate tectonics",
+                        "How do earthquakes occur?",
+                        "What causes volcanic eruptions?"
+                    ];
+                }
+            }
+        }
+
+        // Function to populate the suggestion buttons
+        function populateSuggestions(suggestionsContainer, context, customList = null) {
+            suggestionsContainer.innerHTML = ''; // Clear existing suggestions
+            
+            // Use custom suggestions if provided, otherwise use defaults for Science
+            const suggestions = customList || [
+                "Explain plate tectonics",
+                "How do earthquakes occur?",
+                "What are the different types of plate boundaries?",
+                "Tell me about sea floor spreading"
+            ];
+            
+            suggestions.forEach(text => {
+                const suggestionBtn = document.createElement('button');
+                suggestionBtn.classList.add('suggestion-btn');
+                suggestionBtn.textContent = text;
+                
+                suggestionBtn.addEventListener('click', () => {
+                    const chatbotMessages = document.querySelector('.chatbot-messages');
+                    const chatbotSuggestions = document.querySelector('.chatbot-suggestions');
+                    
+                    // Add the user message
+                    addChatMessage(chatbotMessages, text, 'user');
+                    
+                    // Generate and add the bot response
+                    setTimeout(() => {
+                        const response = generateScienceResponse(text);
+                        addChatMessage(chatbotMessages, response, 'bot');
+                        
+                        // Suggest follow-ups
+                        const followUps = suggestFollowUp(text, 'science');
+                        populateSuggestions(chatbotSuggestions, 'science', followUps);
+                    }, 500);
+                });
+                
+                suggestionsContainer.appendChild(suggestionBtn);
+            });
+        }
+
+        // Function to add a message to the chat
+        function addChatMessage(messagesContainer, text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'bot' ? 'bot-message' : 'user-message');
+            messageDiv.textContent = text;
+            messagesContainer.appendChild(messageDiv);
+            // Scroll to the bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
     </script>
+
+    <!-- Ensure consistent green color theme -->
+    <style>
+        .course-header {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf) !important;
+        }
+        
+        .subject-icon {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf) !important;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #4ade80, #2dd4bf) !important;
+        }
+        
+        .lesson-title i {
+            color: #4ade80 !important;
+        }
+        
+        .instructor-avatar {
+            background: linear-gradient(135deg, #4ade80, #2dd4bf) !important;
+        }
+    </style>
 </body>
 </html>
